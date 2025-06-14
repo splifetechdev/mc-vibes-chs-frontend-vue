@@ -12,17 +12,17 @@ export const NOT_CONNECT_NETWORK = "NOT_CONNECT_NETWORK";
 // export const imageUrl = "http://localhost:9771/image";
 // export const companyimagemasterTMUrl = "http://localhost:9771/companyimage";
 
-// 192.168.0.147 Server
-// export const apiUrl = "http://192.168.0.147:8085/api_nyc_mvibe_dev";
-// export const imageUrl = "http://192.168.0.147:8085/api_nyc_mvibe_dev/image";
-// export const companyimagemasterTMUrl =
-//   "http://192.168.0.147:8085/api_nyc_mvibe_dev/companyimage";
+// 172.31.1.100 Server
+export const apiUrl = "http://172.31.1.100:8085/api_mvibe_chs_dev";
+export const imageUrl = "http://172.31.1.100:8085/api_mvibe_chs_dev/image";
+export const companyimagemasterTMUrl =
+  "http://172.31.1.100:8085/api_mvibe_chs_dev/companyimage";
 
 // Dev Server
-export const apiUrl = "https://api.m-vibe.com/api_mvibe_nyc_dev";
-export const imageUrl = "https://api.m-vibe.com/api_mvibe_nyc_dev/image";
-export const companyimagemasterTMUrl =
-  "https://api.m-vibe.com/api_mvibe_nyc_dev/compantimage";
+// export const apiUrl = "https://api.m-vibe.com/api_mvibe_chs_dev";
+// export const imageUrl = "https://api.m-vibe.com/api_mvibe_chs_dev/image";
+// export const companyimagemasterTMUrl =
+//   "https://api.m-vibe.com/api_mvibe_chs_dev/compantimage";
 
 export const udgroup = {
   WORK_CENTER: `WorkCenter`,
