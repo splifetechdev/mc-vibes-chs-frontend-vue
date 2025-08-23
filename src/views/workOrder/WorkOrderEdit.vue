@@ -365,7 +365,7 @@
             class="mr-3 buttongreen"
             outlined
             @click="adjustPlanAndPreview()"
-            :disabled="doc_status"
+            :disabled="doc_status || approve_status"
           >
             Preview Plan
           </v-btn>
@@ -2174,7 +2174,31 @@ export default {
     },
 
     async deleteItemConfirm() {
+      // alert(this.opn_id_del);
+      // this.desserts.splice(this.editedIndex, 1)
       // this.desserts.splice(this.editedIndex, 1);
+
+      //check opn in use in time_card_detail
+      const res_chk = await api.checkOpnInUsedInTimecardDetailByOpnId(
+        this.opn_id_del
+      );
+
+      // console.log(`res_chk: ${JSON.stringify(res_chk.data)}`);
+      //res_chk: [{"ctc":5}]
+      if (res_chk.data[0].ctc > 0) {
+        this.$hideLoader();
+        this.$store.state.global_dialog = true;
+        this.setupAlertDialog(
+          true,
+          "Failed!!!",
+          "รายการนี้มีการใช้งานแล้วไม่สามารถลบได้!!!",
+          "text-h5 red--text text-center"
+        );
+        this.closeDelete();
+        return;
+      }
+
+      // console.log(`หลุดลงมาได้`);
 
       this.$showLoader();
       // delete data by id

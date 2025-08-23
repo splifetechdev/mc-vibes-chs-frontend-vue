@@ -1020,7 +1020,51 @@ export default {
     },
     async postTimecard() {
       try {
-        const response = await api.postTimecard(this.$route.params.id);
+        // ตรวจสอบข้อมูลก่อนทำการ Post
+        const activeLogs = this.logs.filter((log) => log?.isDeleted !== true);
+
+        // เช็คว่ามีข้อมูล log หรือไม่
+        if (activeLogs.length === 0) {
+          this.$store.state.global_dialog = true;
+          this.setupAlertDialog(
+            true,
+            "Failed!!!",
+            "ไม่มีข้อมูลสำหรับ Post",
+            "text-h5 red--text text-center"
+          );
+          return;
+        }
+
+        // เช็คเงื่อนไข Worker และ QTY
+        for (const log of activeLogs) {
+          // เช็ค Worker (ต้องมี worker_id)
+          if (!log.worker_id) {
+            this.$store.state.global_dialog = true;
+            this.setupAlertDialog(
+              true,
+              "Failed!!!",
+              "กรุณาเลือก Worker ให้ครบถ้วน",
+              "text-h5 red--text text-center"
+            );
+            return;
+          }
+
+          // เช็ค QTY (ต้องมากกว่า 0)
+          if (!log.qty || Number(log.qty) === 0) {
+            this.$store.state.global_dialog = true;
+            this.setupAlertDialog(
+              true,
+              "Failed!!!",
+              "กรุณาใส่ QTY ให้มากกว่า 0",
+              "text-h5 red--text text-center"
+            );
+            return;
+          }
+        }
+
+        // const response = await api.postTimecard(this.$route.params.id);
+        // ถ้าผ่านการตรวจสอบแล้ว ทำการ Post
+        const response = await api.postTimecardV2(this.$route.params.id);
         this.$store.state.global_dialog_push = true;
         if (response.data.error) {
           this.setupAlertDialog(

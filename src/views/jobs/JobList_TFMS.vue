@@ -9,6 +9,18 @@
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-autocomplete
                 class="mx-2"
+                label="Work Center Group"
+                v-model="selectedWorkCenterGroup"
+                hide-details
+                outlined
+                dense
+                :items="workCenterGroups"
+                item-text="label"
+                item-value="id"
+                clearable
+              ></v-autocomplete>
+              <v-autocomplete
+                class="mx-2"
                 label="Work Center"
                 v-model="selectedWorkCenterId"
                 hide-details
@@ -879,6 +891,8 @@ export default {
     workers: [],
     workCenters: [],
     activetab: 2,
+    workCenterGroups: [],
+    selectedWorkCenterGroup: null,
     selectedWorkCenterId: null,
     machines: [],
     items: [],
@@ -944,12 +958,33 @@ export default {
         if (!machine) {
           return filteredData;
         }
+        this.selectedWorkCenterGroup =
+          machine.tbl_work_center.tbl_work_center_group.id;
         this.selectedWorkCenterId = machine.tbl_work_center.id;
         filteredData = filteredData.filter(
           (job) => job.mch_id === this.selectedMachineId
         );
       }
+      if (this.selectedWorkCenterGroup) {
+        console.log(filteredData);
+        filteredData = filteredData.filter(
+          (job) => job.wc_group_id.id === this.selectedWorkCenterGroup
+        );
+      }
       if (this.selectedWorkCenterId) {
+        const workcenter = this.workCenters.find(
+          (m) => m.id === this.selectedWorkCenterId
+        );
+        if (!workcenter) {
+          return filteredData;
+        }
+        const workcentergroup = this.workCenterGroups.find(
+          (wcg) => wcg.work_center_group_id === workcenter.wc_group
+        );
+        if (!workcentergroup) {
+          return filteredData;
+        }
+        this.selectedWorkCenterGroup = workcentergroup.id;
         filteredData = filteredData.filter(
           (job) => job.wc_id === this.selectedWorkCenterId
         );
@@ -990,6 +1025,12 @@ export default {
   watch: {
     activetab() {
       this.loadData();
+    },
+    selectedWorkCenterGroup(val) {
+      if (val === null) {
+        this.selectedWorkCenterId = null;
+        this.selectedMachineId = null;
+      }
     },
     selectedWorkCenterId(val) {
       if (val === null) {
@@ -1060,23 +1101,36 @@ export default {
       this.editingDetailId = null;
       this.defectDialog = false;
     },
+    async loadWorkCenterGroup() {
+      const response = await api.getWorkCenterGroupMaster(
+        localStorage.getItem(server.COMPANYID)
+      );
+      this.workCenterGroups = response.data.map((data) => ({
+        ...data,
+        label: `${data.work_center_group_id}: ${data.work_center_group_name}`,
+      }));
+    },
     async loadWorkCenter() {
       const response = await api.getWorkCenterMaster(
         localStorage.getItem(server.COMPANYID)
       );
-      this.workCenters = response.data.map((data) => ({
-        ...data,
-        label: `${data.wc_id}:${data.wc_name}`,
-      }));
+      if (response.data.length > 0) {
+        this.workCenters = response.data.map((data) => ({
+          ...data,
+          label: `${data.wc_id}:${data.wc_name}`,
+        }));
+      }
     },
     async loadMachine() {
       const response = await api.listMachineByCompany(
         localStorage.getItem(server.COMPANYID)
       );
-      this.machines = response.data.map((data) => ({
-        ...data,
-        label: `${data.machine_id}:${data.name}`,
-      }));
+      if (response.data.length > 0) {
+        this.machines = response.data.map((data) => ({
+          ...data,
+          label: `${data.machine_id}:${data.name}`,
+        }));
+      }
     },
     async loadAuthorize() {
       const res_get = await api.getSettingGroupMenu();
@@ -1100,7 +1154,6 @@ export default {
         const posted = this.activetab === 3;
         const targetStatus = posted ? "post" : "save";
         const checkIsEnd = targetStatus === "save";
-
         this.jobs = response.data
           .filter(
             (data) =>
@@ -1139,6 +1192,8 @@ export default {
               end_at: endAt,
               end_time: data?.time_end,
               wc_id: data?.tbl_mch?.work_center_id || data?.wc_id,
+              wc_group_id:
+                data?.tbl_mch?.tbl_work_center?.tbl_work_center_group,
               worker_id_list: data?.tbl_time_card_detail_workers.map(
                 (worker) => worker.worker_id
               ),
@@ -1193,6 +1248,9 @@ export default {
               : dayjs(data.opn_end_date_time).format(formatTime),
             wc_id:
               tbl_job?.tbl_mch?.work_center_id || data?.tbl_mch?.work_center_id,
+            wc_group_id:
+              tbl_job?.tbl_mch?.tbl_work_center?.tbl_work_center_group ||
+              data?.tbl_mch?.tbl_work_center?.tbl_work_center_group,
             id: tbl_job?.id || null,
             worker_id: tbl_job?.worker_id || null,
             worker_id_list: tbl_job?.tbl_job_workers?.length
@@ -1221,10 +1279,12 @@ export default {
     },
     async loadWorker() {
       const response = await api.getWorkerByCompany();
-      this.workers = response.data.map((data) => ({
-        ...data,
-        label: `${data.emp_id}:${data.firstname} ${data.lastname}`,
-      }));
+      if (response.data.length > 0) {
+        this.workers = response.data.map((data) => ({
+          ...data,
+          label: `${data.emp_id}:${data.firstname} ${data.lastname}`,
+        }));
+      }
     },
     async loadLatestJob() {
       const response = await api.getLatestJob();
@@ -1304,24 +1364,31 @@ export default {
       // ]);
       this.reloadData();
     },
-    onClickEndJobButton(item){
-      const now = new Date();
-const target = new Date(`${item.end_at}T${item.end_time}:00`);
+    onClickEndJobButton(item) {
+      // console.log(`onClickEndJobButton: `, JSON.stringify(item, null, 2));
 
-if (now >= target) {
-  if (!item.worker_id_list.length === 0) {
+      // return;
+
+      const now = new Date();
+      const target = new Date(`${item.end_at}T${item.end_time}:00`);
+
+      if (now >= target) {
+        if (!item.worker_id_list.length === 0) {
+          this.$store.state.global_dialog = true;
+          this.setupAlertDialog(true, "Failed!!!", "Please fill worker");
+          return;
+        }
+        this.selectedItem = item;
+        this.confirmEndJobDialog = true;
+      } else {
         this.$store.state.global_dialog = true;
-        this.setupAlertDialog(true, "Failed!!!", "Please fill worker");
+        this.setupAlertDialog(
+          true,
+          "Failed!!!",
+          "ไม่สามารถ checkout ก่อนเวลาได้"
+        );
         return;
       }
-      this.selectedItem = item;
-      this.confirmEndJobDialog = true;
-} else {
-      this.$store.state.global_dialog = true;
-      this.setupAlertDialog(true, "Failed!!!", "ไม่สามารถ checkout ก่อนเวลาได้");
-      return;
-}
-      
     },
     onClickStartJobButton(item) {
       if (!item.worker_id_list.length === 0) {
@@ -1488,9 +1555,11 @@ if (now >= target) {
       this.$router.back();
     }
 
+    // this.$showLoader();
     await this.loadAuthorize();
     await this.loadOpn();
     await this.loadWorkOrder();
+    await this.loadWorkCenterGroup();
     await this.loadWorkCenter();
     await this.loadMachine();
     await this.loadItem();

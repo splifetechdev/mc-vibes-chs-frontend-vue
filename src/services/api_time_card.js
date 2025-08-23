@@ -40,6 +40,17 @@ export const postTimecard = (timecard_id) => {
   }
 };
 
+export const postTimecardV2 = (timecard_id) => {
+  try {
+    return httpClient.post(`${server.TIMECARD}/${timecard_id}/post-v2`);
+  } catch (error) {
+    return {
+      isError: true,
+      error,
+    };
+  }
+};
+
 export const postJobTimecard = (timecard_id, start_time, end_time) => {
   try {
     return httpClient.post(`${server.TIMECARD}/${timecard_id}/post-job`, {
@@ -133,13 +144,23 @@ export const getTimecardReport = (shift_id, start, end, isLeader) => {
 // }
 
 export const listDeleteJobByCompany = (data) => {
-  return httpClient.post(server.TIMECARD + `/get/getdeletejobbycompany`,data);
+  return httpClient.post(server.TIMECARD + `/get/getdeletejobbycompany`, data);
 };
 
 export const getListDocumentsNycompany = (company_id) => {
-  return httpClient.get(`${server.TIMECARD}/get/list_doc_running_no_option/${company_id}`);
+  return httpClient.get(
+    `${server.TIMECARD}/get/list_doc_running_no_option/${company_id}`
+  );
 };
 
 export const getTimecardWorkOrderOption = (company_id) => {
-  return httpClient.get(`${server.TIMECARD}/time_card/work_order/option/${company_id}`);
+  return httpClient.get(
+    `${server.TIMECARD}/time_card/work_order/option/${company_id}`
+  );
+};
+
+export const checkOpnInUsedInTimecardDetailByOpnId = (opn_id) => {
+  return httpClient.get(
+    `${server.TIMECARD}/time_card_detail/check_opn_id_ues/${opn_id}`
+  );
 };
