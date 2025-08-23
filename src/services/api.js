@@ -52,6 +52,7 @@ import * as receiveFromPO from "@/services/api_receive_from_po.js";
 import * as routingTmpApis from "@/services/api_routing_tmp.js";
 import * as reportAllApis from "@/services/api_reportall.js";
 import * as costingApis from "@/services/api_costing.js";
+import * as shiftOTApis from "@/services/api_shift_ot.js";
 
 const isLoggedIn = () => {
   let token = localStorage.getItem(server.TOKEN_KEY);
@@ -206,6 +207,7 @@ export default {
   ...routingTmpApis,
   ...reportAllApis,
   ...costingApis,
+  ...shiftOTApis,
 };
 
 //my-memo

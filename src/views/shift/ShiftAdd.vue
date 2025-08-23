@@ -13,22 +13,44 @@
           <v-col cols="12" md="12" justify="center">
             <div id="tabs" class="containertab">
               <div class="tabs">
-                <div v-on:click="activetab = 1" v-bind:class="[activetab === 1 ? 'active' : '']">General</div>
-                <div class="ml-1" v-on:click="activetab = 2" v-bind:class="[activetab === 2 ? 'active' : '']">U-define
+                <div
+                  v-on:click="activetab = 1"
+                  v-bind:class="[activetab === 1 ? 'active' : '']"
+                >
+                  General
+                </div>
+                <div
+                  class="ml-1"
+                  v-on:click="activetab = 2"
+                  v-bind:class="[activetab === 2 ? 'active' : '']"
+                >
+                  U-define
                 </div>
               </div>
 
               <div class="content">
-                <div v-if="activetab === 1 && callsoopentab == true" class="tabcontent">
+                <div
+                  v-if="activetab === 1 && callsoopentab == true"
+                  class="tabcontent"
+                >
                   <v-row class="mb-n10">
                     <v-col cols="12" sm="12" md="5">
                       <h4 class="black--text">Shift ID</h4>
-                      <v-text-field autofocus v-model="itemadd.shift_id" outlined dense></v-text-field>
+                      <v-text-field
+                        autofocus
+                        v-model="itemadd.shift_id"
+                        outlined
+                        dense
+                      ></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="12" md="5">
                       <h4 class="black--text">Shift Name</h4>
-                      <v-text-field v-model="itemadd.shift_name" outlined dense></v-text-field>
+                      <v-text-field
+                        v-model="itemadd.shift_name"
+                        outlined
+                        dense
+                      ></v-text-field>
                     </v-col>
                   </v-row>
 
@@ -37,8 +59,15 @@
                     <v-col cols="12" sm="12" md="5">
                       <h4 class="black--text">Start Time</h4>
                       <!-- placeholder="Start Time" -->
-                      <vue-timepicker close-on-complete format="HH:mm" fixed-dropdown-button auto-scroll hide-clear-button
-                        width="100%" v-model="itemadd.start_time">
+                      <vue-timepicker
+                        close-on-complete
+                        format="HH:mm"
+                        fixed-dropdown-button
+                        auto-scroll
+                        hide-clear-button
+                        width="100%"
+                        v-model="itemadd.start_time"
+                      >
                       </vue-timepicker>
 
                       <!-- <v-dialog ref="dialog1" color="#1F51FF" v-model="modalstarttime"
@@ -60,12 +89,18 @@
                       </v-dialog> -->
                     </v-col>
 
-
                     <!-- End Time -->
                     <v-col cols="12" sm="12" md="5">
                       <h4 class="black--text">End Time</h4>
-                      <vue-timepicker close-on-complete format="HH:mm" fixed-dropdown-button auto-scroll hide-clear-button
-                        width="100%" v-model="itemadd.end_time">
+                      <vue-timepicker
+                        close-on-complete
+                        format="HH:mm"
+                        fixed-dropdown-button
+                        auto-scroll
+                        hide-clear-button
+                        width="100%"
+                        v-model="itemadd.end_time"
+                      >
                       </vue-timepicker>
                       <!-- <v-dialog ref="dialog2" color="#1F51FF" v-model="modalendtime" :return-value.sync="itemadd.end_time"
                         persistent width="290px">
@@ -91,8 +126,14 @@
                     <!-- Break Start -->
                     <v-col cols="12" sm="12" md="5">
                       <h4 class="black--text">Break Start</h4>
-                      <vue-timepicker close-on-complete format="HH:mm" fixed-dropdown-button auto-scroll
-                        width="100%" v-model="itemadd.break_start">
+                      <vue-timepicker
+                        close-on-complete
+                        format="HH:mm"
+                        fixed-dropdown-button
+                        auto-scroll
+                        width="100%"
+                        v-model="itemadd.break_start"
+                      >
                       </vue-timepicker>
 
                       <!-- <v-dialog ref="dialog3" color="#1F51FF" v-model="modalbreakstart"
@@ -117,8 +158,14 @@
                     <!-- Break End -->
                     <v-col cols="12" sm="12" md="5">
                       <h4 class="black--text">Break End</h4>
-                      <vue-timepicker close-on-complete format="HH:mm" fixed-dropdown-button auto-scroll
-                        width="100%" v-model="itemadd.break_end">
+                      <vue-timepicker
+                        close-on-complete
+                        format="HH:mm"
+                        fixed-dropdown-button
+                        auto-scroll
+                        width="100%"
+                        v-model="itemadd.break_end"
+                      >
                       </vue-timepicker>
 
                       <!-- <v-dialog ref="dialog4" color="#1F51FF" v-model="modalbreakend"
@@ -145,8 +192,15 @@
                     <!-- Summary Time -->
                     <v-col cols="12" sm="12" md="5">
                       <h4 class="black--text">Summary Time</h4>
-                      <vue-timepicker close-on-complete format="HH:mm" fixed-dropdown-button auto-scroll hide-clear-button
-                        width="100%" v-model="itemadd.summary_time">
+                      <vue-timepicker
+                        close-on-complete
+                        format="HH:mm"
+                        fixed-dropdown-button
+                        auto-scroll
+                        hide-clear-button
+                        width="100%"
+                        v-model="itemadd.summary_time"
+                      >
                       </vue-timepicker>
 
                       <!-- <v-dialog ref="dialog5" color="#1F51FF" v-model="modalsummarytime"
@@ -169,15 +223,135 @@
                     </v-col>
                   </v-row>
 
+                  <!-- เพิ่มส่วนนี้หลังจาก Summary Time และก่อน </div> ปิด tabcontent -->
+                  <v-row class="mb-4">
+                    <v-col cols="12">
+                      <h4 class="black--text mb-3">Shift OT</h4>
 
+                      <!-- ส่วนเพิ่มข้อมูล OT -->
+                      <v-card outlined class="pa-3 mb-3">
+                        <v-row>
+                          <!-- OT Start Time -->
+                          <v-col cols="12" sm="12" md="3">
+                            <h5 class="black--text">OT Start Time</h5>
+                            <vue-timepicker
+                              close-on-complete
+                              format="HH:mm"
+                              fixed-dropdown-button
+                              auto-scroll
+                              hide-clear-button
+                              width="100%"
+                              v-model="otForm.ot_start_time"
+                            >
+                            </vue-timepicker>
+                          </v-col>
 
+                          <!-- OT End Time -->
+                          <v-col cols="12" sm="12" md="3">
+                            <h5 class="black--text">OT End Time</h5>
+                            <vue-timepicker
+                              close-on-complete
+                              format="HH:mm"
+                              fixed-dropdown-button
+                              auto-scroll
+                              hide-clear-button
+                              width="100%"
+                              v-model="otForm.ot_end_time"
+                            >
+                            </vue-timepicker>
+                          </v-col>
 
+                          <!-- OT Rate -->
+                          <v-col cols="12" sm="12" md="3">
+                            <h5 class="black--text">OT Rate</h5>
+                            <v-text-field
+                              v-model="otForm.ot_rate"
+                              type="number"
+                              step="0.25"
+                              min="0"
+                              outlined
+                              dense
+                              placeholder="1.5"
+                            >
+                            </v-text-field>
+                          </v-col>
+
+                          <!-- ปุ่มเพิ่ม -->
+                          <v-col
+                            cols="12"
+                            sm="12"
+                            md="3"
+                            class="d-flex align-end"
+                          >
+                            <v-btn
+                              color="green"
+                              dark
+                              @click="addOTRecord()"
+                              :disabled="!canAddOT"
+                              class="mb-2"
+                            >
+                              <v-icon left>mdi-plus</v-icon>
+                              Add OT
+                            </v-btn>
+                          </v-col>
+                        </v-row>
+                      </v-card>
+
+                      <!-- ตารางแสดงข้อมูล OT -->
+                      <v-card outlined v-if="shiftOTList.length > 0">
+                        <v-card-title class="py-2">
+                          <h5>OT List</h5>
+                        </v-card-title>
+                        <v-data-table
+                          :headers="otHeaders"
+                          :items="shiftOTList"
+                          class="elevation-0"
+                          hide-default-footer
+                          disable-pagination
+                        >
+                          <template v-slot:item.ot_start_time="{ item }">
+                            {{ formatTimeDisplay(item.ot_start_time) }}
+                          </template>
+
+                          <template v-slot:item.ot_end_time="{ item }">
+                            {{ formatTimeDisplay(item.ot_end_time) }}
+                          </template>
+
+                          <template v-slot:item.ot_rate="{ item }">
+                            {{ item.ot_rate }}x
+                          </template>
+
+                          <template v-slot:item.actions="{ item, index }">
+                            <v-btn
+                              icon
+                              color="red"
+                              small
+                              @click="removeOTRecord(index)"
+                            >
+                              <v-icon small>mdi-delete</v-icon>
+                            </v-btn>
+                          </template>
+                        </v-data-table>
+                      </v-card>
+
+                      <!-- ข้อความแสดงเมื่อไม่มีข้อมูล OT -->
+                      <v-card outlined v-else class="pa-3 text-center">
+                        <v-icon color="grey" large>mdi-clock-outline</v-icon>
+                        <p class="grey--text mt-2 mb-0">
+                          No OT records added yet
+                        </p>
+                      </v-card>
+                    </v-col>
+                  </v-row>
                 </div>
                 <div v-if="activetab === 2" class="tabcontent">
-                  <UDefine :udmodulename="udmodule_name" :dataudefine="itemaddudefine" @dataOnUdefine="getdataOnUdefine">
+                  <UDefine
+                    :udmodulename="udmodule_name"
+                    :dataudefine="itemaddudefine"
+                    @dataOnUdefine="getdataOnUdefine"
+                  >
                   </UDefine>
                 </div>
-
               </div>
             </div>
             <!-- <template>
@@ -245,7 +419,12 @@
 
         <v-card-actions>
           <v-row justify="center" class="mt-3">
-            <v-btn depressed width="100" class="mr-3  buttonblue" @click="savedata()">
+            <v-btn
+              depressed
+              width="100"
+              class="mr-3  buttonblue"
+              @click="savedata()"
+            >
               Save
             </v-btn>
             <v-btn depressed outlined width="100" @click="$router.back()">
@@ -254,20 +433,28 @@
           </v-row>
         </v-card-actions>
 
-
         <v-dialog v-model="dialogpreviewimage" max-width="700px">
           <v-card>
             <v-card-title class="text-h5">
               <v-btn icon @click="closepreviewimage">
                 <v-icon large>mdi-close</v-icon>
               </v-btn>
-              Preview Image</v-card-title>
+              Preview Image</v-card-title
+            >
 
-            <v-img disabled :src="previewimage" class="grey lighten-2 mt-3 mb-5" aspect-ratio="1" contain>
+            <v-img
+              disabled
+              :src="previewimage"
+              class="grey lighten-2 mt-3 mb-5"
+              aspect-ratio="1"
+              contain
+            >
             </v-img>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closepreviewimage">Cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="closepreviewimage"
+                >Cancel</v-btn
+              >
 
               <v-spacer></v-spacer>
             </v-card-actions>
@@ -276,18 +463,35 @@
 
         <v-dialog v-model="dialogDeleteimage" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this image?</v-card-title>
+            <v-card-title class="text-h5"
+              >Are you sure you want to delete this image?</v-card-title
+            >
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDeleteimage">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirmimage">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="closeDeleteimage"
+                >Cancel</v-btn
+              >
+              <v-btn color="blue darken-1" text @click="deleteItemConfirmimage"
+                >OK</v-btn
+              >
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
         </v-dialog>
 
-        <SuccessDialog :status="dialogAdd" :text_color="text_color" :title="title" :message="message" />
-        <SuccessDialogPush :status="dialogAdd" :text_color="text_color" :title="title" :message="message" :link="link" />
+        <SuccessDialog
+          :status="dialogAdd"
+          :text_color="text_color"
+          :title="title"
+          :message="message"
+        />
+        <SuccessDialogPush
+          :status="dialogAdd"
+          :text_color="text_color"
+          :title="title"
+          :message="message"
+          :link="link"
+        />
       </v-card>
     </v-container>
   </v-card-title>
@@ -297,8 +501,7 @@ import SuccessDialog from "@/components/cards/SuccessDialog";
 import SuccessDialogPush from "@/components/cards/SuccessDialogPush";
 import api from "@/services/api";
 import UDefine from "@/views/u-define/UDefine";
-import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
-
+import VueTimepicker from "vue2-timepicker/src/vue-timepicker.vue";
 
 import { server, udgroup } from "@/services/constants";
 export default {
@@ -312,6 +515,13 @@ export default {
     computedDateFormatted() {
       return this.formatDaparseDatete(this.date);
     },
+    canAddOT() {
+      return (
+        this.otForm.ot_start_time !== "" &&
+        this.otForm.ot_end_time !== "" &&
+        this.otForm.ot_rate > 0
+      );
+    },
   },
 
   watch: {
@@ -321,6 +531,25 @@ export default {
   },
 
   data: (vm) => ({
+    otForm: {
+      ot_start_time: "",
+      ot_end_time: "",
+      ot_rate: 1.5,
+    },
+    shiftOTList: [],
+    otHeaders: [
+      { text: "OT Start Time", value: "ot_start_time", align: "center" },
+      { text: "OT End Time", value: "ot_end_time", align: "center" },
+      { text: "OT Rate", value: "ot_rate", align: "center" },
+      {
+        text: "Actions",
+        value: "actions",
+        sortable: false,
+        align: "center",
+        width: "100",
+      },
+    ],
+
     tab: null,
     itemadd: {
       shift_id: "",
@@ -440,14 +669,85 @@ export default {
     await this.loadUnitGroupList(localStorage.getItem(server.COMPANYID));
     await this.loadDimGroupList(localStorage.getItem(server.COMPANYID));
     await this.loadModelGroupList(localStorage.getItem(server.COMPANYID));
-    await this.onLoadUdefineIDByCompanyAndModuleName(udgroup.SHIFT, localStorage.getItem(server.COMPANYID));
+    await this.onLoadUdefineIDByCompanyAndModuleName(
+      udgroup.SHIFT,
+      localStorage.getItem(server.COMPANYID)
+    );
     this.udmodule_name = udgroup.SHIFT;
-
 
     await this.loadAuthorize();
     this.$hideLoader();
   },
   methods: {
+    // เพิ่ม OT Record
+    addOTRecord() {
+      if (!this.canAddOT) {
+        this.$store.state.global_dialog = true;
+        this.setupAlertDialog(
+          true,
+          "Failed!!!",
+          "Please fill all OT fields correctly",
+          "text-h5 red--text text-center"
+        );
+        return;
+      }
+
+      // ตรวจสอบว่าเวลาไม่ซ้ำกัน
+      const isDuplicate = this.shiftOTList.some(
+        (ot) =>
+          ot.ot_start_time === this.otForm.ot_start_time &&
+          ot.ot_end_time === this.otForm.ot_end_time
+      );
+
+      if (isDuplicate) {
+        this.$store.state.global_dialog = true;
+        this.setupAlertDialog(
+          true,
+          "Failed!!!",
+          "This OT time period already exists",
+          "text-h5 red--text text-center"
+        );
+        return;
+      }
+
+      // เพิ่มข้อมูล OT ลงในรายการ
+      this.shiftOTList.push({
+        ot_start_time: this.otForm.ot_start_time,
+        ot_end_time: this.otForm.ot_end_time,
+        ot_rate: parseFloat(this.otForm.ot_rate),
+      });
+
+      // เคลียร์ฟอร์ม
+      this.clearOTForm();
+    },
+
+    // ลบ OT Record
+    removeOTRecord(index) {
+      this.shiftOTList.splice(index, 1);
+    },
+
+    // เคลียร์ฟอร์ม OT
+    clearOTForm() {
+      this.otForm = {
+        ot_start_time: "",
+        ot_end_time: "",
+        ot_rate: 1.5,
+      };
+    },
+
+    // แปลงเวลาให้แสดงผลสวย
+    formatTimeDisplay(time) {
+      if (!time) return "";
+      return time;
+    },
+
+    // แปลงเวลาเป็น DateTime สำหรับ database
+    convertTimeToDateTime(timeString) {
+      if (!timeString) return null;
+      const today = new Date().toISOString().split("T")[0];
+      return `${today} ${timeString}:00`;
+    },
+
     async onLoadUdefineIDByCompanyAndModuleName(module_name, company_id) {
       const res_get = await api.getu_define_module_UdefineIDByCompanyAndModuleName(
         module_name,
@@ -472,7 +772,7 @@ export default {
       this.text_color = text_color;
       this.link = link;
     },
-    previewImage: function (event) {
+    previewImage: function(event) {
       var input = event.target;
       if (input.files) {
         var reader = new FileReader();
@@ -578,7 +878,10 @@ export default {
         // return;
       }
 
-      if (this.itemadd.summary_time == "" || this.itemadd.summary_time == null) {
+      if (
+        this.itemadd.summary_time == "" ||
+        this.itemadd.summary_time == null
+      ) {
         this.$store.state.global_dialog = true;
         this.setupAlertDialog(
           true,
@@ -598,14 +901,36 @@ export default {
 
       // Insert
 
-
+      // Insert Shift หลัก
       const res_add = await api.addShift(this.itemadd);
+
       if (res_add.status == 200) {
-        this.$hideLoader();
+        const shiftId = res_add.data.id;
+
+        // Insert OT Records ถ้ามีข้อมูล
+        if (this.shiftOTList.length > 0) {
+          for (let otRecord of this.shiftOTList) {
+            const otData = {
+              shift_id: shiftId,
+              ot_start_time: otRecord.ot_start_time + ":00", // แปลงเป็น HH:mm:ss
+              ot_end_time: otRecord.ot_end_time + ":00", // แปลงเป็น HH:mm:ss
+              ot_rate: otRecord.ot_rate,
+            };
+
+            // เรียก API สำหรับบันทึก OT
+            await api.addShiftOT(otData);
+          }
+        }
+
+        // Insert U-define
         this.itemaddudefine.module_master_id = res_add.data.id;
-        this.itemaddudefine.date1 = this.parseDate(this.itemaddudefine.date1)
-        this.itemaddudefine.date2 = this.parseDate(this.itemaddudefine.date2)
-        const res_addudefine = await api.addu_define_master(this.itemaddudefine);
+        this.itemaddudefine.date1 = this.parseDate(this.itemaddudefine.date1);
+        this.itemaddudefine.date2 = this.parseDate(this.itemaddudefine.date2);
+        const res_addudefine = await api.addu_define_master(
+          this.itemaddudefine
+        );
+
+        this.$hideLoader();
 
         if (res_addudefine.status == 200) {
           this.$hideLoader();
@@ -619,8 +944,12 @@ export default {
           );
           return;
         } else {
-          this.itemaddudefine.date1 = this.formatDate(this.itemaddudefine.date1);
-          this.itemaddudefine.date2 = this.formatDate(this.itemaddudefine.date2);
+          this.itemaddudefine.date1 = this.formatDate(
+            this.itemaddudefine.date1
+          );
+          this.itemaddudefine.date2 = this.formatDate(
+            this.itemaddudefine.date2
+          );
           this.$hideLoader();
           this.$store.state.global_dialog = true;
           this.setupAlertDialog(
@@ -641,11 +970,16 @@ export default {
           "text-h5 red--text text-center"
         );
         return;
-      }
-      else {
-        this.itemadd.last_purchase_price_date = this.formatDate(this.itemaddudefine.last_purchase_price_date);
-        this.itemadd.cost_price_date = this.formatDate(this.itemaddudefine.cost_price_date);
-        this.itemadd.sales_price_date = this.formatDate(this.itemaddudefine.sales_price_date);
+      } else {
+        this.itemadd.last_purchase_price_date = this.formatDate(
+          this.itemaddudefine.last_purchase_price_date
+        );
+        this.itemadd.cost_price_date = this.formatDate(
+          this.itemaddudefine.cost_price_date
+        );
+        this.itemadd.sales_price_date = this.formatDate(
+          this.itemaddudefine.sales_price_date
+        );
         this.$hideLoader();
         this.$store.state.global_dialog = true;
         this.setupAlertDialog(
@@ -703,12 +1037,10 @@ export default {
     async changeDepartment(department_id) {
       const result = await api.getDivisionByDepartment(department_id);
       this.division_list = result.data;
-
     },
     async changeDivision(division_id) {
       const result = await api.getSectionByCompanyID(division_id);
       this.section_list = result.data;
-
     },
     async loadAuthorize() {
       const res_get = await api.getSettingGroupMenu();
@@ -791,20 +1123,16 @@ export default {
       const [year, month, day] = date.split("/");
       return `${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
     },
-
-
   },
   beforeCreate() {
     this.$store.state.navMenu = true;
   },
 };
 </script>
-  
-
 
 <style scoped>
 .v-btn:not(.v-btn--round).v-size--default.buttonblue {
-  background-color: #1F51FF;
+  background-color: #1f51ff;
   color: white;
 }
 
@@ -815,7 +1143,7 @@ export default {
 }
 
 .v-tab.v-tab--active {
-  background-color: #1F51FF;
+  background-color: #1f51ff;
   color: white;
 }
 
@@ -823,10 +1151,10 @@ export default {
   border: solid;
 }
 
-.theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active),
-.theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-icon,
-.theme--light.v-tabs>.v-tabs-bar .v-tab:not(.v-tab--active)>.v-btn,
-.theme--light.v-tabs>.v-tabs-bar .v-tab--disabled {
+.theme--light.v-tabs > .v-tabs-bar .v-tab:not(.v-tab--active),
+.theme--light.v-tabs > .v-tabs-bar .v-tab:not(.v-tab--active) > .v-icon,
+.theme--light.v-tabs > .v-tabs-bar .v-tab:not(.v-tab--active) > .v-btn,
+.theme--light.v-tabs > .v-tabs-bar .v-tab--disabled {
   color: black;
   /* border: solid 1px; */
 }
@@ -879,7 +1207,7 @@ export default {
 
 /* Styling for active tab */
 .tabs div.active {
-  background-color: #1F51FF;
+  background-color: #1f51ff;
   color: #ffffff;
   /* border-bottom: 2px solid #fff; */
   cursor: default;

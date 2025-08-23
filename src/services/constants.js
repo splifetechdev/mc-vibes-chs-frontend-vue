@@ -8,15 +8,15 @@ export const UPLOAD_PHOTO_FAIL_MESSAGE =
 export const NOT_CONNECT_NETWORK = "NOT_CONNECT_NETWORK";
 
 // Local Server
-// export const apiUrl = "http://localhost:9771";
-// export const imageUrl = "http://localhost:9771/image";
-// export const companyimagemasterTMUrl = "http://localhost:9771/companyimage";
+export const apiUrl = "http://localhost:9771";
+export const imageUrl = "http://localhost:9771/image";
+export const companyimagemasterTMUrl = "http://localhost:9771/companyimage";
 
 // 172.31.1.100 Server
-export const apiUrl = "http://172.31.1.100:8085/api_mvibe_chs_dev";
-export const imageUrl = "http://172.31.1.100:8085/api_mvibe_chs_dev/image";
-export const companyimagemasterTMUrl =
-  "http://172.31.1.100:8085/api_mvibe_chs_dev/companyimage";
+// export const apiUrl = "http://172.31.1.100:8085/api_mvibe_chs_dev";
+// export const imageUrl = "http://172.31.1.100:8085/api_mvibe_chs_dev/image";
+// export const companyimagemasterTMUrl =
+//   "http://172.31.1.100:8085/api_mvibe_chs_dev/companyimage";
 
 // Dev Server
 // export const apiUrl = "https://api.m-vibe.com/api_mvibe_chs_dev";
@@ -121,4 +121,5 @@ export const server = {
   MASTER_ROUTING_TMP: `routing_tmp`,
   REPORT_ALL: `report_all`,
   COSTING: `costing`,
+  SHIFT_OT: `shift_ot`,
 };
