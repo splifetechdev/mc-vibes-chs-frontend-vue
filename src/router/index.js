@@ -131,9 +131,20 @@ import ReCalCosting from "@/views/costing/Costing.vue";
 import ReCalCostingDetails from "@/views/costing/CostingDetails.vue";
 import CalculateCost from "@/views/costing/calculatecost.vue";
 
+import FileImportSystem from "@/views/fileimportsystem/FileImportSystem.vue";
+
+
 Vue.use(VueRouter);
 
 const routes = [
+    {
+    path: "/file-import-system",
+    meta: {
+      isSecured: false,
+    },
+    name: "FileImportSystem",
+    component: FileImportSystem,
+  },
   {
     path: "/re-cal-costing-details/:doc_running_no",
     meta: {

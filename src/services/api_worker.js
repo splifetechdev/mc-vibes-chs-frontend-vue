@@ -36,3 +36,7 @@ export const ChangeapprovalWorkerAccount = (data) => {
 export const workerCheckIn = (data) => {
   return httpClient.post(server.WORKER_URL + `/check-in`, data);
 };
+
+export const import_Worker = (data) => {
+  return httpClient.post(server.WORKER_URL + `/import_worker`,data);
+};

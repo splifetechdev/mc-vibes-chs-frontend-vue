@@ -408,7 +408,27 @@ export default {
         for (var i = getremoveindex.length - 1; i >= 0; i--)
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
-      if (this.subgroupmenu && this.submenudetail && this.subsettinggroupmenu) {
+
+            // cut config import-file menu
+      if (!this.authorize.some(item => item.cmd_route === 'file-import-system') || (item.cmd_route == "file-import-system" && item.smd_view == 0)) {
+        this.subsettingimportfile = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Config") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "File Import System") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      if (this.subgroupmenu && this.submenudetail && this.subsettinggroupmenu && this.subsettingimportfile) {
         let getremoveindex = [];
         this.menus.forEach((itemmenu, index) => {
           if (itemmenu.title == "Config") {
@@ -952,6 +972,7 @@ export default {
       subgroupmenu: false,
       submenudetail: false,
       subsettinggroupmenu: false,
+      subsettingimportfile:false,
       subcompany: false,
       subdepartment: false,
       subposition: false,
@@ -1151,6 +1172,11 @@ export default {
               index: 2,
               title: "Setting Authorize",
               route: "/setting-group-menu",
+            },
+             {
+              index: 2,
+              title: "File Import System",
+              route: "/file-import-system",
             },
           ],
         },

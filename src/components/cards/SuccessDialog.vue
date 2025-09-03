@@ -12,7 +12,7 @@
       <v-card-text>
         <v-spacer />
         <div class="text-center">
-          <div>{{ message }}</div>
+          <div v-html="message"></div>
         </div>
         <v-spacer />
       </v-card-text>

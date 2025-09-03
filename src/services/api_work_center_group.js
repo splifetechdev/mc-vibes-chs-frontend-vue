@@ -53,3 +53,7 @@ export const getWorkCenterGroupGanttchartCompanyID = (id, data) => {
     data
   );
 };
+
+export const import_Work_Center_Group = (data) => {
+  return httpClient.post(server.WORK_CENTER_GROUP + `/import_work_center_group`,data);
+};

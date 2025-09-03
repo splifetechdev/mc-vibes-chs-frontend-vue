@@ -20,3 +20,7 @@ export const updateDefectCause = (id, data) => {
 export const DeleteDefectCause= (id) => {
   return httpClient.delete(server.DEFECT_CAUSE + `/${id}`);
 };
+
+export const import_Defect_Cause = (data) => {
+  return httpClient.post(server.DEFECT_CAUSE + `/import_defect_cause`,data);
+};

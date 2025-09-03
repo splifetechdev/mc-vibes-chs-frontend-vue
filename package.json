@@ -27,6 +27,7 @@
     "material-design-icons-iconfont": "^5.0.1",
     "pdfvuer": "^1.9.2",
     "printd": "^1.6.0",
+    "read-excel-file": "^5.8.8",
     "signature_pad": "^4.0.3",
     "vue": "^2.6.10",
     "vue-apexcharts": "^1.6.2",
