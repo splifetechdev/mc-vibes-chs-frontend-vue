@@ -1051,7 +1051,7 @@ export default {
         let getremoveindex = [];
         let indexsubmenu = -1;
         this.menus.forEach((itemmenu, index) => {
-          if (itemmenu.title == "Report") {
+          if (itemmenu.title == "Production Order") {
             indexsubmenu = index;
             this.menus[index].items.forEach((x, i) => {
               if (x.title == "Calculate Cost") {
@@ -1727,8 +1727,7 @@ export default {
         to.fullPath == "/time-card" ||
         to.fullPath == "/delete-job" ||
         to.fullPath == "/job" ||
-        to.fullPath == "/iot-mapping" ||
-        to.fullPath == "/calculate-cost"
+        to.fullPath == "/iot-mapping" 
       ) {
         let indexmenu;
         this.menus.forEach((item, index) => {
@@ -1745,7 +1744,8 @@ export default {
         to.fullPath == "/report-on-inquiries-about-cloth-registration" ||
         to.fullPath == "/leader-time-card-report" ||
         to.fullPath == "/production-status-report" ||
-        to.fullPath == "/re-cal-costing"
+        to.fullPath == "/re-cal-costing" ||
+        to.fullPath == "/calculate-cost"
       ) {
         let indexmenu;
         this.menus.forEach((item, index) => {
