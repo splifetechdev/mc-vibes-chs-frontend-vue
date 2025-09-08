@@ -165,11 +165,72 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
+    // cut Productivity Dashboard  Menu
+      if (item.cmd_route == "productivity-dashboard" && item.smd_view == 0) {
+        this.subdashboardproductivitydashboard = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Dashboard") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Productivity Dashboard") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+          // cut Quality Dashboard  Menu
+      if (item.cmd_route == "quality-dashboard" && item.smd_view == 0) {
+        this.subdashboardqualitydashboard = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Dashboard") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Quality Dashboard") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      
+          // cut OEE Dashboard  Menu
+      if (item.cmd_route == "oee-dashboard" && item.smd_view == 0) {
+        this.subdashboardoeedashboard = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Dashboard") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "OEE Dashboard") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
       // cut dashboard
       if (
         this.subdashboardmaindashboard &&
         this.subdashboardscheduling &&
-        this.subdashboardavailabilitydashboard
+        this.subdashboardavailabilitydashboard &&
+        this.subdashboardproductivitydashboard &&
+        this.subdashboardqualitydashboard &&
+        this.subdashboardoeedashboard
       ) {
         let getremoveindex = [];
         this.menus.forEach((itemmenu, index) => {
@@ -335,7 +396,7 @@ export default {
 
       // cut administrator worker
       if (item.cmd_route == "u-define-module" && item.smd_view == 0) {
-        this.subsubudefinemodule = true;
+        this.subudefinemodule = true;
         let getremoveindex = [];
         let indexsubmenu = -1;
         this.menus.forEach((itemmenu, index) => {
@@ -351,6 +412,65 @@ export default {
         for (var i = getremoveindex.length - 1; i >= 0; i--)
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
+
+   // cut Warehouse menu
+      if (item.cmd_route == "warehouse" && item.smd_view == 0) {
+        this.subwarehouse = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Administrator") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Warehouse") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+         // cut Location menu
+      if (item.cmd_route == "location" && item.smd_view == 0) {
+        this.sublocation = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Administrator") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Location") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+   // cut Sheft menu
+      if (item.cmd_route == "sheft" && item.smd_view == 0) {
+        this.subsheft = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Administrator") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Shelt") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      
 
       // cut config group-menu menu
       if (item.cmd_route == "group-menu" && item.smd_view == 0) {
@@ -448,7 +568,10 @@ export default {
         this.subdocruningconfig &&
         this.subemployee &&
         this.subworker &&
-        this.subudefinemodule
+        this.subudefinemodule && 
+        this.subwarehouse &&
+        this.sublocation && 
+        this.subsheft
       ) {
         let getremoveindex = [];
         this.menus.forEach((itemmenu, index) => {
@@ -517,7 +640,28 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
-      if (this.subitemmaster && this.subunit && this.subitemgroup) {
+    // cut Inventory Receive From Production Menu
+      if (item.cmd_route == "receive-from-production-list" && item.smd_view == 0) {
+        this.subreceivefromproductionlist = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Inventory") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Receive From Production") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      
+
+      if (this.subitemmaster && this.subreceivefromproductionlist && this.subunit && this.subitemgroup) {
         let getremoveindex = [];
         this.menus.forEach((itemmenu, index) => {
           if (itemmenu.title == "Inventory") {
@@ -557,6 +701,27 @@ export default {
             indexsubmenu = index;
             this.menus[index].items.forEach((x, i) => {
               if (x.title == "Work Center") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      
+
+            // cut Production DownTime Cause Menu
+      if (item.cmd_route == "machine" && item.smd_view == 0) {
+        this.submachine = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Production") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Machine") {
                 getremoveindex.push(i);
               }
             });
@@ -704,6 +869,7 @@ export default {
         this.subshift &&
         this.subworkcentergroup &&
         this.subworkcenter &&
+        this.submachine &&
         this.subdowntimecause &&
         this.subkpimastermenu &&
         this.subholidaymenu &&
@@ -780,6 +946,66 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
+            // cut Job menu
+      if (item.cmd_route == "job-tfms" && item.smd_view == 0) {
+        this.subproductionorderjob = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Production Order") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Job") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      // cut Check In menu
+      if (item.cmd_route == "worker-check-in" && item.smd_view == 0) {
+        this.subproductionorderworkercheckin = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Production Order") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Check In") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+            // cut Check Out menu
+      if (item.cmd_route == "worker-check-out" && item.smd_view == 0) {
+        this.subproductionorderworkercheckout = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Production Order") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Check Out") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+      
+      
+      
+
       // cut IOT Mapping menu
       if (item.cmd_route == "iot-mapping" && item.smd_view == 0) {
         this.subproductionorderiotmapping = true;
@@ -822,6 +1048,9 @@ export default {
         this.subproductionorder &&
         this.subproductionorderiotmapping &&
         this.subproductionorderdeletejob &&
+        this.subproductionorderjob &&
+        this.subproductionorderworkercheckin &&
+        this.subproductionorderworkercheckout &&
         this.subreceiveproductionorder &&
         this.subreportcalculatecost
       ) {
@@ -982,25 +1211,36 @@ export default {
       subemployee: false,
       subworker: false,
       subudefinemodule: false,
+      subwarehouse:false,
+      sublocation:false,
+      subsheft:false,
       subitemgroup: false,
       subunit: false,
       subitemmaster: false,
+      subreceivefromproductionlist:false,
       subdefectcause: false,
       subshift: false,
       subworkcentergroup: false,
       subworkcenter: false,
       subdowntimecause: false,
+      submachine:false,
       subplcmapping: false,
       subrouting: false,
       subproductionorder: false,
       subreceiveproductionorder: false,
       subproductionorderiotmapping: false,
       subproductionorderdeletejob: false,
+      subproductionorderjob:false,
+      subproductionorderworkercheckin:false,
+      subproductionorderworkercheckout:false,
       subproductionorderproductionstatusreport: false,
       subproductionorderrecalcosting: false,
       subdashboardmaindashboard: false,
       subdashboardscheduling: false,
       subdashboardavailabilitydashboard: false,
+      subdashboardproductivitydashboard:false,
+      subdashboardqualitydashboard:false,
+      subdashboardoeedashboard:false,
       subreportcalculatecost: false,
       subreporttimecardreport: false,
       subreportreportoninquiriesaboutclothregistration: false,
@@ -1425,7 +1665,8 @@ export default {
       } else if (
         to.fullPath == "/itemgroup" ||
         to.fullPath == "/unit" ||
-        to.fullPath == "/item-master"
+        to.fullPath == "/item-master" ||
+        to.fullPath == "/receive-from-production-list"
       ) {
         let indexmenu;
         this.menus.forEach((item, index) => {
