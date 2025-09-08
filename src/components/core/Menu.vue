@@ -927,6 +927,26 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
+      
+      // cut Timecard Job menu
+      if (item.cmd_route == "time-card" && item.smd_view == 0) {
+        this.subproductionordertimecard = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Production Order") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Timecard") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
       // cut Delete Job menu
       if (item.cmd_route == "delete-job" && item.smd_view == 0) {
         this.subproductionorderdeletejob = true;
@@ -1047,6 +1067,7 @@ export default {
       if (
         this.subproductionorder &&
         this.subproductionorderiotmapping &&
+        this.subproductionordertimecard &&
         this.subproductionorderdeletejob &&
         this.subproductionorderjob &&
         this.subproductionorderworkercheckin &&
@@ -1229,6 +1250,7 @@ export default {
       subproductionorder: false,
       subreceiveproductionorder: false,
       subproductionorderiotmapping: false,
+      subproductionordertimecard:false,
       subproductionorderdeletejob: false,
       subproductionorderjob:false,
       subproductionorderworkercheckin:false,
