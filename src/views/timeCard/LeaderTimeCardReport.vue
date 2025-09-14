@@ -193,6 +193,7 @@
               >OEE={{ workCenter.oee || 0 }}</v-col
             >
           </v-row>
+          <!-- background-color: blue; -->
           <v-row style="border: 1px solid black;">
             <v-col cols="12" md="2">รหัสสินค้า</v-col>
             <v-col cols="12" md="3">ช่ือสินค้า</v-col>
@@ -773,7 +774,7 @@ export default {
       const workers = this.workers.filter((worker) =>
         workerIdList.includes(worker.id)
       );
-      console.log({ workers });
+      // console.log({ workers });
       return workers.map((worker) => worker.label).join(",");
     },
     onClickNewDefect() {
@@ -877,11 +878,11 @@ export default {
           const result = response.data.filter(
             (data) => data.workCenters.length > 0
           );
-          console.log("aaa");
+          // console.log("aaa");
           // console.log({ result });
           this.reports = [...this.reports, ...result];
         });
-        // console.log({ resports: this.reports });
+        // console.log(this.reports);
         // this.reports = this.reports.sort((a, b) =>
         //   dayjs(b.date).isBefore(dayjs(a.date)) ? 1 : -1
         // );
@@ -890,7 +891,7 @@ export default {
           dayjs(`${this.parseDate(a.date)}T${a.start_time}`).isBefore(dayjs(`${this.parseDate(b.date)}T${b.start_time}`)) ? -1 : 1
         );
    
-        console.log(this.reports);
+        // console.log(this.reports);
       } else {
         const response = await api.getTimecardReport(
           this.selectedShiftId,

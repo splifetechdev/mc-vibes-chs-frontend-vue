@@ -41,3 +41,8 @@ export const getRoutingItemhavestdCost = (item_master_id, company_id) => {
     server.ROUTING + `/getItemhavestd_cost/${item_master_id}/${company_id}`
   );
 };
+
+
+export const import_Routing = (data) => {
+  return httpClient.post(server.ROUTING + `/import_routing`,data);
+};

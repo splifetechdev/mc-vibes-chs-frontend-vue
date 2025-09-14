@@ -36,3 +36,7 @@ export const getAllItemMasterByCompany = (id) => {
 export const DeleteItemMaster= (id) => {
   return httpClient.delete(server.ITEMMASTER + `/${id}`);
 };
+
+export const import_Item_Master = (data) => {
+  return httpClient.post(server.ITEMMASTER + `/import_item_master`,data);
+};

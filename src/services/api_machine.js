@@ -55,3 +55,7 @@ export const listMachineGanttchart = (work_center_id, data) => {
     data
   );
 };
+
+export const import_Machine = (data) => {
+  return httpClient.post(server.MACHINE + `/import_mch`,data);
+};

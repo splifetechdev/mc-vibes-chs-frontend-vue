@@ -193,7 +193,8 @@
               >OEE={{ workCenter.oee || 0 }}</v-col
             >
           </v-row>
-          <v-row style="border: 1px solid black;">
+          <!-- style="background-color: blue;" -->
+          <v-row style="border: 1px solid black;" >
             <v-col cols="12" md="2">รหัสสินค้า</v-col>
             <v-col cols="12" md="3">ช่ือสินค้า</v-col>
             <v-col cols="12" md="1">รหัส OPN</v-col>

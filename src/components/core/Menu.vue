@@ -1,7 +1,8 @@
 <template>
   <nav>
     <!-- <v-navigation-drawer clipped app permanent dark color="#DFDFDF">  #2a4bc1 -->
-    <v-navigation-drawer app permanent dark color="#ffffff" width="70px">
+      <!-- width="70px" -->
+    <v-navigation-drawer app permanent dark color="#ffffff" >
       <!-- <v-row class="ma-5" align="center" justify="center" >
         <v-col>  -->
       <router-link to="/" exact>
@@ -41,42 +42,42 @@
             bottom
             :offset-x="!item.route"
           >
-            <template v-slot:activator="{ on, attrs }">
+           <template v-slot:activator="{ on, attrs }">
               <v-list-item
-                :style="{
-                  justifyContent: 'center',
-                }"
                 v-on="on"
                 v-bind="attrs"
                 @click="onClickMenuItem(item)"
               >
-                <v-tooltip right color="#2a4bc1">
-                  <template v-slot:activator="{ on }">
-                    <!-- <v-list-item-icon > -->
-                    <v-icon v-text="item.action" v-on="on"></v-icon>
-                    <!-- </v-list-item-icon> -->
+                <v-list-item-icon>
+                  <v-icon v-text="item.action"></v-icon>
+                  <v-badge
+                    v-if="
+                      item.title == 'Approval' &&
+                        $store.state.alertapprovalmenu != 0
+                    "
+                    color="red"
+                    :content="$store.state.alertapprovalmenu.toString()"
+                  >
+                  </v-badge>
 
-                    <!-- <v-list-item-content> -->
-                    <!-- ชื่อเมนู -->
-                    <!-- <v-list-item-title v-text="item.title"></v-list-item-title> -->
-                    <!-- </v-list-item-content> -->
-                    <v-badge
-                      v-if="
-                        item.title == 'Approval' &&
-                          $store.state.alertapprovalmenu != 0
-                      "
-                      color="red"
-                      :content="$store.state.alertapprovalmenu.toString()"
-                      class="badgeapprover"
-                    >
-                    </v-badge>
-                  </template>
-                  <span>{{ item.title }}</span>
-                </v-tooltip>
-                <!-- <v-list-item-icon v-if="!item.route"> -->
-                <!-- ไอคอนขวา แสดงว่ามีเมนูย่อย -->
-                <!-- <v-icon>mdi-chevron-right</v-icon> -->
-                <!-- </v-list-item-icon> -->
+                  <v-badge
+                    v-if="
+                      item.title == 'Approval Template' &&
+                        $store.state.alertapprovaltemplatemenu != 0
+                    "
+                    color="red"
+                    :content="$store.state.alertapprovaltemplatemenu.toString()"
+                  >
+                  </v-badge>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.title"></v-list-item-title>
+                </v-list-item-content>
+
+                <v-list-item-icon v-if="!item.route">
+                  <v-icon>mdi-chevron-right</v-icon>
+                </v-list-item-icon>
               </v-list-item>
               <!-- <v-divider></v-divider> -->
             </template>
@@ -165,11 +166,72 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
+    // cut Productivity Dashboard  Menu
+      if (item.cmd_route == "productivity-dashboard" && item.smd_view == 0) {
+        this.subdashboardproductivitydashboard = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Dashboard") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Productivity Dashboard") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+          // cut Quality Dashboard  Menu
+      if (item.cmd_route == "quality-dashboard" && item.smd_view == 0) {
+        this.subdashboardqualitydashboard = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Dashboard") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Quality Dashboard") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      
+          // cut OEE Dashboard  Menu
+      if (item.cmd_route == "oee-dashboard" && item.smd_view == 0) {
+        this.subdashboardoeedashboard = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Dashboard") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "OEE Dashboard") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
       // cut dashboard
       if (
         this.subdashboardmaindashboard &&
         this.subdashboardscheduling &&
-        this.subdashboardavailabilitydashboard
+        this.subdashboardavailabilitydashboard &&
+        this.subdashboardproductivitydashboard &&
+        this.subdashboardqualitydashboard &&
+        this.subdashboardoeedashboard
       ) {
         let getremoveindex = [];
         this.menus.forEach((itemmenu, index) => {
@@ -335,7 +397,7 @@ export default {
 
       // cut administrator worker
       if (item.cmd_route == "u-define-module" && item.smd_view == 0) {
-        this.subsubudefinemodule = true;
+        this.subudefinemodule = true;
         let getremoveindex = [];
         let indexsubmenu = -1;
         this.menus.forEach((itemmenu, index) => {
@@ -351,6 +413,65 @@ export default {
         for (var i = getremoveindex.length - 1; i >= 0; i--)
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
+
+   // cut Warehouse menu
+      if (item.cmd_route == "warehouse" && item.smd_view == 0) {
+        this.subwarehouse = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Administrator") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Warehouse") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+         // cut Location menu
+      if (item.cmd_route == "location" && item.smd_view == 0) {
+        this.sublocation = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Administrator") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Location") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+   // cut Sheft menu
+      if (item.cmd_route == "sheft" && item.smd_view == 0) {
+        this.subsheft = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Administrator") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Shelt") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      
 
       // cut config group-menu menu
       if (item.cmd_route == "group-menu" && item.smd_view == 0) {
@@ -408,7 +529,27 @@ export default {
         for (var i = getremoveindex.length - 1; i >= 0; i--)
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
-      if (this.subgroupmenu && this.submenudetail && this.subsettinggroupmenu) {
+
+            // cut config import-file menu
+      if (!this.authorize.some(item => item.cmd_route === 'file-import-system') || (item.cmd_route == "file-import-system" && item.smd_view == 0)) {
+        this.subsettingimportfile = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Config") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "File Import System") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      if (this.subgroupmenu && this.submenudetail && this.subsettinggroupmenu && this.subsettingimportfile) {
         let getremoveindex = [];
         this.menus.forEach((itemmenu, index) => {
           if (itemmenu.title == "Config") {
@@ -428,7 +569,10 @@ export default {
         this.subdocruningconfig &&
         this.subemployee &&
         this.subworker &&
-        this.subudefinemodule
+        this.subudefinemodule && 
+        this.subwarehouse &&
+        this.sublocation && 
+        this.subsheft
       ) {
         let getremoveindex = [];
         this.menus.forEach((itemmenu, index) => {
@@ -497,7 +641,28 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
-      if (this.subitemmaster && this.subunit && this.subitemgroup) {
+    // cut Inventory Receive From Production Menu
+      if (item.cmd_route == "receive-from-production-list" && item.smd_view == 0) {
+        this.subreceivefromproductionlist = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Inventory") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Receive From Production") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      
+
+      if (this.subitemmaster && this.subreceivefromproductionlist && this.subunit && this.subitemgroup) {
         let getremoveindex = [];
         this.menus.forEach((itemmenu, index) => {
           if (itemmenu.title == "Inventory") {
@@ -537,6 +702,27 @@ export default {
             indexsubmenu = index;
             this.menus[index].items.forEach((x, i) => {
               if (x.title == "Work Center") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      
+
+            // cut Production DownTime Cause Menu
+      if (item.cmd_route == "machine" && item.smd_view == 0) {
+        this.submachine = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Production") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Machine") {
                 getremoveindex.push(i);
               }
             });
@@ -684,6 +870,7 @@ export default {
         this.subshift &&
         this.subworkcentergroup &&
         this.subworkcenter &&
+        this.submachine &&
         this.subdowntimecause &&
         this.subkpimastermenu &&
         this.subholidaymenu &&
@@ -741,6 +928,26 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
+      
+      // cut Timecard Job menu
+      if (item.cmd_route == "time-card" && item.smd_view == 0) {
+        this.subproductionordertimecard = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Production Order") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Timecard") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
       // cut Delete Job menu
       if (item.cmd_route == "delete-job" && item.smd_view == 0) {
         this.subproductionorderdeletejob = true;
@@ -759,6 +966,66 @@ export default {
         for (var i = getremoveindex.length - 1; i >= 0; i--)
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
+
+            // cut Job menu
+      if (item.cmd_route == "job-tfms" && item.smd_view == 0) {
+        this.subproductionorderjob = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Production Order") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Job") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      // cut Check In menu
+      if (item.cmd_route == "worker-check-in" && item.smd_view == 0) {
+        this.subproductionorderworkercheckin = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Production Order") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Check In") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+            // cut Check Out menu
+      if (item.cmd_route == "worker-check-out" && item.smd_view == 0) {
+        this.subproductionorderworkercheckout = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Production Order") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Check Out") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+      
+      
+      
 
       // cut IOT Mapping menu
       if (item.cmd_route == "iot-mapping" && item.smd_view == 0) {
@@ -785,7 +1052,7 @@ export default {
         let getremoveindex = [];
         let indexsubmenu = -1;
         this.menus.forEach((itemmenu, index) => {
-          if (itemmenu.title == "Report") {
+          if (itemmenu.title == "Production Order") {
             indexsubmenu = index;
             this.menus[index].items.forEach((x, i) => {
               if (x.title == "Calculate Cost") {
@@ -801,7 +1068,11 @@ export default {
       if (
         this.subproductionorder &&
         this.subproductionorderiotmapping &&
+        this.subproductionordertimecard &&
         this.subproductionorderdeletejob &&
+        this.subproductionorderjob &&
+        this.subproductionorderworkercheckin &&
+        this.subproductionorderworkercheckout &&
         this.subreceiveproductionorder &&
         this.subreportcalculatecost
       ) {
@@ -952,6 +1223,7 @@ export default {
       subgroupmenu: false,
       submenudetail: false,
       subsettinggroupmenu: false,
+      subsettingimportfile:false,
       subcompany: false,
       subdepartment: false,
       subposition: false,
@@ -961,25 +1233,37 @@ export default {
       subemployee: false,
       subworker: false,
       subudefinemodule: false,
+      subwarehouse:false,
+      sublocation:false,
+      subsheft:false,
       subitemgroup: false,
       subunit: false,
       subitemmaster: false,
+      subreceivefromproductionlist:false,
       subdefectcause: false,
       subshift: false,
       subworkcentergroup: false,
       subworkcenter: false,
       subdowntimecause: false,
+      submachine:false,
       subplcmapping: false,
       subrouting: false,
       subproductionorder: false,
       subreceiveproductionorder: false,
       subproductionorderiotmapping: false,
+      subproductionordertimecard:false,
       subproductionorderdeletejob: false,
+      subproductionorderjob:false,
+      subproductionorderworkercheckin:false,
+      subproductionorderworkercheckout:false,
       subproductionorderproductionstatusreport: false,
       subproductionorderrecalcosting: false,
       subdashboardmaindashboard: false,
       subdashboardscheduling: false,
       subdashboardavailabilitydashboard: false,
+      subdashboardproductivitydashboard:false,
+      subdashboardqualitydashboard:false,
+      subdashboardoeedashboard:false,
       subreportcalculatecost: false,
       subreporttimecardreport: false,
       subreportreportoninquiriesaboutclothregistration: false,
@@ -1151,6 +1435,11 @@ export default {
               index: 2,
               title: "Setting Authorize",
               route: "/setting-group-menu",
+            },
+             {
+              index: 2,
+              title: "File Import System",
+              route: "/file-import-system",
             },
           ],
         },
@@ -1399,7 +1688,8 @@ export default {
       } else if (
         to.fullPath == "/itemgroup" ||
         to.fullPath == "/unit" ||
-        to.fullPath == "/item-master"
+        to.fullPath == "/item-master" ||
+        to.fullPath == "/receive-from-production-list"
       ) {
         let indexmenu;
         this.menus.forEach((item, index) => {
@@ -1438,8 +1728,7 @@ export default {
         to.fullPath == "/time-card" ||
         to.fullPath == "/delete-job" ||
         to.fullPath == "/job" ||
-        to.fullPath == "/iot-mapping" ||
-        to.fullPath == "/calculate-cost"
+        to.fullPath == "/iot-mapping" 
       ) {
         let indexmenu;
         this.menus.forEach((item, index) => {
@@ -1456,7 +1745,8 @@ export default {
         to.fullPath == "/report-on-inquiries-about-cloth-registration" ||
         to.fullPath == "/leader-time-card-report" ||
         to.fullPath == "/production-status-report" ||
-        to.fullPath == "/re-cal-costing"
+        to.fullPath == "/re-cal-costing" ||
+        to.fullPath == "/calculate-cost"
       ) {
         let indexmenu;
         this.menus.forEach((item, index) => {
@@ -1483,7 +1773,7 @@ export default {
 <style scoped>
 .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled):not(.v-list-item__icon) {
   color: #254e58 !important;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .v-icon {

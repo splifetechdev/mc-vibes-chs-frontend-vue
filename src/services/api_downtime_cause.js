@@ -34,3 +34,7 @@ export const getAllDownTimeCauseCompany = (id) => {
 export const DeleteDownTimeCause = (id) => {
   return httpClient.delete(server.DOWNTIME_CAUSE + `/${id}`);
 };
+
+export const import_DownTime_Cause = (data) => {
+  return httpClient.post(server.DOWNTIME_CAUSE + `/import_downtime_cause`,data);
+};

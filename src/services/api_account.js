@@ -107,3 +107,7 @@ export const getAccountDetail = (id) => {
 export const ChangeapprovalUserAccount = (data) => {
   return httpClient.post(server.ACCOUNT_URL + `/changeapprovaluser`,data);
 };
+
+export const import_Employee = (data) => {
+  return httpClient.post(server.ACCOUNT_URL + `/import_employee`,data);
+};

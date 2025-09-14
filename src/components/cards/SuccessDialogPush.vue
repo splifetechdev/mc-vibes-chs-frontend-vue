@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="$store.state.global_dialog_push" max-width="290">
+  <v-dialog v-model="$store.state.global_dialog_push" max-width="290" @click:outside="closeDialogSendmail(link)">
     <v-card>
       <v-card-title :class="text_color">
         <v-spacer />
@@ -12,7 +12,7 @@
       <v-card-text>
         <v-spacer />
         <div class="text-center">
-          <div>{{ message }}</div>
+          <div v-html="message"></div>
         </div>
         <v-spacer />
       </v-card-text>

@@ -1062,10 +1062,10 @@ export default {
           }
         }
 
-        // const response = await api.postTimecard(this.$route.params.id);
         // ถ้าผ่านการตรวจสอบแล้ว ทำการ Post
         const response = await api.postTimecardV2(this.$route.params.id);
         this.$store.state.global_dialog_push = true;
+
         if (response.data.error) {
           this.setupAlertDialog(
             true,
@@ -1082,6 +1082,7 @@ export default {
             "/time-card"
           );
         }
+
         this.loadTimeCardLog();
       } catch (error) {
         this.$store.state.global_dialog_push = true;

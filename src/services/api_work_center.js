@@ -46,3 +46,7 @@ export const DeleteWorkCenter = (id) => {
 export const getWorkCenterGanttchartCompanyID = (id,data) => {
   return httpClient.post(server.WORK_CENTER + `/wcganttchart/${id}`,data);
 };
+
+export const import_Work_Center = (data) => {
+  return httpClient.post(server.WORK_CENTER + `/import_work_center`,data);
+};
