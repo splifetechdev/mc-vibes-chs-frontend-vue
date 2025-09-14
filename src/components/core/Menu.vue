@@ -1784,6 +1784,10 @@ export default {
   color: white;
 }
 
+.v-application--is-ltr .v-list-item__action:first-child, .v-application--is-ltr .v-list-item__icon:first-child {
+    margin-right:10px;
+}
+
 .bg-active {
   background-color: #2a4bc1;
   color: white !important;
