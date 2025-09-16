@@ -8,21 +8,24 @@ export const UPLOAD_PHOTO_FAIL_MESSAGE =
 export const NOT_CONNECT_NETWORK = "NOT_CONNECT_NETWORK";
 
 // Local Server
-// export const apiUrl = "http://localhost:9771";
-// export const imageUrl = "http://localhost:9771/image";
-// export const companyimagemasterTMUrl = "http://localhost:9771/companyimage";
+export const apiUrl = "http://localhost:9771";
+export const imageUrl = "http://localhost:9771/image";
+export const companyimagemasterTMUrl = "http://localhost:9771/companyimage";
+export const fileimportsystem = "http://localhost:9771/fileimportsystem";
 
 // 172.31.1.100 Server
 // export const apiUrl = "http://172.31.1.100:8085/api_mvibe_chs_dev";
 // export const imageUrl = "http://172.31.1.100:8085/api_mvibe_chs_dev/image";
 // export const companyimagemasterTMUrl =
 //   "http://172.31.1.100:8085/api_mvibe_chs_dev/companyimage";
+// export const fileimportsystem = "http://172.31.1.100:8085/api_mvibe_chs_dev/fileimportsystem";
 
 // Dev Server
-export const apiUrl = "https://api.m-vibe.com/api_mvibe_chs_dev";
-export const imageUrl = "https://api.m-vibe.com/api_mvibe_chs_dev/image";
-export const companyimagemasterTMUrl =
-  "https://api.m-vibe.com/api_mvibe_chs_dev/compantimage";
+// export const apiUrl = "https://api.m-vibe.com/api_mvibe_chs_dev";
+// export const imageUrl = "https://api.m-vibe.com/api_mvibe_chs_dev/image";
+// export const companyimagemasterTMUrl =
+//   "https://api.m-vibe.com/api_mvibe_chs_dev/compantimage";
+// export const fileimportsystem = "https://api.m-vibe.com/api_mvibe_chs_dev/fileimportsystem";
 
 
 export const udgroup = {
