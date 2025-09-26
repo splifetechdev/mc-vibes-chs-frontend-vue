@@ -463,7 +463,8 @@ export default {
     },
   },
   beforeCreate() {
-    console.log("beforeCreate");
+    // console.log("beforeCreate");
+    this.$store.state.isLogged = true;
     this.$store.state.navMenu = true;
   },
 };
