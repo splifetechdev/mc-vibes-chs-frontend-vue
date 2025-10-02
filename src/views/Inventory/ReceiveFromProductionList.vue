@@ -32,7 +32,18 @@
           >
             Add Warehouse
           </v-btn> -->
+          
         </v-toolbar>
+      </template>
+      <template v-for="col in ['order_qty', 'receive_qty', 'remain_qty']" v-slot:[`item.${col}`]="{ item }">
+        <span class="text-right" style="display: block;">
+          {{ Number(item[col]).toLocaleString() }}
+        </span>
+      </template>
+      <template v-for="coll in ['batch_count']" v-slot:[`item.${coll}`]="{ item }">
+              <span class="text-right" style="display: block;">
+                {{ item[coll] }}
+              </span>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon class="mr-2" @click="openeditItem(item)" v-if="authorize_edit">

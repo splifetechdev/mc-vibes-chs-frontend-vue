@@ -91,14 +91,25 @@
             </v-btn> -->
           </v-toolbar>
         </template>
+        <template v-for="col in ['order_qty', 'it_qty']" v-slot:[`item.${col}`]="{ item }">
+          <span class="text-right" style="display: block;">
+            {{ Number(item[col]).toLocaleString() }}
+          </span>
+        </template>
         <template v-slot:item.new_qty_remain="{ item }">
           <!-- <v-chip
           :color="item.status == 'A' ? 'success' : 'error'"
           dark
           >{{ item.status == 'A' ? 'Active' : 'Inactive' }}</v-chip
         > -->
-
-          {{ item.order_qty - item.it_qty }}
+          <span class="text-right" style="display: block;">
+            {{ (item.order_qty - item.it_qty).toLocaleString() }}
+          </span>
+        </template>
+        <template v-slot:item.it_batch="{ item }">
+          <span class="text-right" style="display: block;">
+            {{ item.it_batch }}
+          </span>
         </template>
 
         <template v-slot:[`item.actions`]="{ item }">
