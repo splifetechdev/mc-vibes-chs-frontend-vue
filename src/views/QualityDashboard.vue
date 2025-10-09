@@ -50,8 +50,9 @@
       </v-row>
       <v-row>
         <v-col cols="12" md="12" justify-self='center'>
-          <SummaryQuality :totalQTY="summaryData.qty" :totalGoodProduct="summaryData.good_product_count"
-            :totalDefect="summaryData.defect_count" :defectRate="summaryData.defect_rate" :qualityRate="summaryData.quality_rate" />
+         <SummaryQuality :totalQTY="summaryData.qty" :totalGoodProduct="summaryData.good_product_count"
+            :totalDefect="summaryData.defect_count" :defectRate="summaryData.defect_rate"
+            :qualityRate="summaryData.quality_rate" />
         </v-col>
       </v-row>
       <v-row class="fill-height">
@@ -439,12 +440,27 @@ export default {
       const defect_rate =
         Math.round((result.total_defect_count / result.total_good_product_count) * 100 * 100) / 100 || 0;
       this.summaryData = {
-        qty: result.total_qty,
-        good_product_count: result.total_good_product_count,
-        defect_count: result.total_defect_count,
-        quality_rate: quality_rate.toFixed(2),
-        defect_rate: defect_rate.toFixed(2)
-      }
+        qty: Number(result.total_qty).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }),
+        good_product_count: Number(result.total_good_product_count).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }),
+        defect_count: Number(result.total_defect_count).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }),
+        quality_rate: Number(quality_rate).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }),
+        defect_rate: Number(defect_rate).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })
+      };
     },
     async loadQualityDashboardData() {
       const response = await api.getQualityDashboardData({
