@@ -5,7 +5,7 @@
         <v-col cols="12" md="12">
           <v-row>
             <v-toolbar-title class="text-h6 mt-4"
-              >รายงานเวลาที่เสียไป :
+              >รายงานเวลาที่สูญเสีย :
             </v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-col cols="12" md="3">
@@ -181,7 +181,7 @@
                   <div class="rowprpo aligncenter ">
                     <div class="col-md-12 mb20prpo">
                       <h3>
-                        รายงานสอบเวลาที่สูญเสีย
+                        รายงานเวลาที่สูญเสีย
                       </h3>
                     </div>
                   </div>
@@ -430,7 +430,7 @@ dateto:vm.formatDate(
         data: [],
       },
     ],
-    exportsumfilename: "รายงานเวลาที่เสียไป.xlsx",
+    exportsumfilename: "รายงานเวลาที่สูญเสีย.xlsx",
     datenow: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(2, 8)
