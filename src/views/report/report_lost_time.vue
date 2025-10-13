@@ -153,6 +153,51 @@
           </template> -->
         </v-data-table>
 
+        <v-row class="ma-6">
+            <v-col cols="12" md="12">
+             <h3>สรุปรายงานเวลาที่สูญเสีย</h3> 
+            </v-col>
+        </v-row>
+
+        <v-row class="ma-2">
+            <v-col cols="12" md="12">
+           <v-data-table
+          :headers="headerssum"
+          :items="dessertssum"
+          :search="search"
+          sort-by="fullname"
+          class="elevation-1"
+          :footer-props="{
+            showFirstLastPage: true,
+            firstIcon: 'mdi-arrow-collapse-left',
+            lastIcon: 'mdi-arrow-collapse-right',
+            prevIcon: 'mdi-minus',
+            nextIcon: 'mdi-plus',
+          }"
+        >
+                  <template v-slot:body.append>
+            <tr class="sticky-table-footer">
+              <td style="text-align: left;">
+                <h3>รวม</h3>
+              </td>
+              <td style="text-align: right;">
+                <h4>
+                  {{
+                      dessertssum.reduce(
+                        (sum, item) => sum + item.work_hours,
+                        0
+                      )
+                  }}
+                </h4>
+              </td>
+              <td style="text-align: center;"></td>
+            </tr>
+          </template>
+        </v-data-table>
+            </v-col>
+        </v-row>
+         
+
         <div id="mydivhtmltobase" v-if="desserts.length > 0">
           <div v-for="index in pageAll">
             <div class="aligncenter setfontfamily" id="foo">
@@ -201,7 +246,7 @@
                       </th>
                       <th
                         scope="colgroup"
-                        class="prborderbottom prbordertop prborderleft width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
                         Time
                       </th>
@@ -230,28 +275,32 @@
                       id="content"
                     >
                       <td
-                        class="width20 textaligncenter prborderleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="position: relative;"
+                        class="width20 textalignright prborderleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="position: relative;padding-right: 2px;"
                       >
                         {{ data.tcdate ? data.tcdate : "-" }}
                       </td>
                       <td
-                        class="width20 textaligncenter prborderright prborderbottom captionnofontsize fontsize14"
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
                       >
                         {{ data.time ? data.time : "-" }}
                       </td>
                       <td
-                        class="width20 textaligncenter prborderright prborderbottom captionnofontsize fontsize14"
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                         style="padding-left: 2px;"
                       >
                         {{ data.machine_id ? data.machine_id : "-" }}
                       </td>
                       <td
-                        class="width20 textaligncenter prborderright prborderbottom captionnofontsize fontsize14"
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                         style="padding-left: 2px;"
                       >
                         {{ data.description ? data.description : "-" }}
                       </td>
                       <td
-                        class="width20 textaligncenter prborderright prborderbottom captionnofontsize fontsize14"
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-right: 2px;"
                       >
                         {{ data.work_hours ? data.work_hours : "-" }}
                       </td>
@@ -261,6 +310,89 @@
               </page>
             </div>
           </div>
+          <div class="aligncenter setfontfamily" id="foo">
+              <page size="A4" class="aligncenter">
+                <div class="aligncenter">
+                  <div class="rowprpo aligncenter ">
+                    <div class="col-md-12 mb20prpo">
+                      <h3>
+                        สรุปรายงานเวลาที่สูญเสีย
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="rowprpo captiontableheader  ml30prpo mr30prpo"
+                  style="margin-top:3px"
+                >
+                  <table class="captiontableheader">
+                    <tr>
+                      <th
+                        scope="colgroup"
+                        class="prborderbottom prbordertop prborderleft width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                      >
+                        Downtime Cause
+                      </th>
+                      <th
+                        scope="colgroup"
+                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                      >
+                        Hours
+                      </th>
+                      <th
+                        scope="colgroup"
+                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                      >
+                        Percent
+                      </th>
+                    </tr>
+
+                    <tr
+                      v-for="(data, i) in dessertssum"
+                      id="content"
+                    >
+                      <td
+                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="position: relative;padding-left: 2px;"
+                      >
+                        {{ data.description ? data.description : "-" }}
+                      </td>
+                      <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-right: 2px;"
+                      >
+                        {{ data.work_hours ? data.work_hours : "-" }}
+                      </td>
+                      <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-right: 2px;"
+                      >
+                        {{ data.percent ? data.percent : "-" }}
+                      </td>
+                    </tr>
+                    <tr>
+                       <td
+                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                        รวม
+                      </td>
+                      <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
+                      >
+                        {{ dessertssum.reduce((sum, item) => sum + item.work_hours, 0) }}
+                      </td>
+                      <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
+                      >
+                        
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </page>
+            </div>
         </div>
         <v-card-actions class="mt-5">
           <v-spacer></v-spacer>
@@ -506,29 +638,29 @@ dateto:vm.formatDate(
     headers: [
       {
         text: "Date",
-        align: "start",
+        align: "end",
         sortable: false,
         value: "tcdate",
       },
-      { text: "Time", value: "time" },
-      { text: "Machine Name", value: "machine_id" },
-      { text: "Downtime Cause", value: "description" },
-       {text: "Hours", value: "work_hours" },
+      { text: "Time", value: "time",align: "start" },
+      { text: "Machine Name", value: "machine_id",align: "start" },
+      { text: "Downtime Cause", value: "description",align: "start" },
+       {text: "Hours", value: "work_hours",align: "end" },
+    ],
+    headerssum: [
+      {
+        text: "Downtime Cause",
+        align: "start",
+        sortable: false,
+        value: "description",
+      },
+      { text: "Hours", value: "work_hours",align: "end" },
+      { text: "percent", value: "percent",align: "end" },
     ],
     repalceId: 0,
     desserts: [],
     dessertssum: [],
     dessertsdetail: [],
-    dataheadersum: {
-      doc_running_no: "",
-      item_id: "",
-      item_name: "",
-      po_qty: "",
-      sum_get: "",
-      remain_qty: "",
-      status: "",
-      order_date: "",
-    },
     replaceId: "",
     position: [],
     approver: [],
@@ -712,14 +844,10 @@ dateto:vm.formatDate(
     await this.loadWorkCenterGroup();
     await this.loadDownTimeCause();
     
-    // await this.loadAccountsAll();
-    // await this.loadAccountsActive();
 
     this.$hideLoader();
     let comp_id = localStorage.getItem(server.COMPANYID);
-    // await this.loadCompanyMaster(comp_id);
-    // await this.loadDepartmentMaster(comp_id);
-    // await this.loadDivisionMaster(comp_id);
+
     await this.loadAuthorize();
 
     // this.userId = localStorage.getItem(server.USER_ID);
@@ -809,9 +937,9 @@ async loadDownTimeCause() {
       //checklineforsig = เช็คบรรทัดของ detail เพื่อแสดงลายเซ็น
       let checklineforsig = 10;
       //linedetailprpo คือ บรรทัดทั้งหมดของหน้า
-      let linedetailprpo = 28;
+      let linedetailprpo = 36;
       //datainlineprpo คือ ข้อมูลแต่ละบรรทัด
-      let datainlineprpo = 17;
+      let datainlineprpo = 24;
       let addnewbutget = 0;
       let getdata = [];
       let getnewdata = [];
@@ -998,149 +1126,10 @@ async loadDownTimeCause() {
       this.$hideLoader();
       // return blob;
     },
-    chkBtnPreviewStatus(item) {
-      //item.status != 'C' || !authorize_edit
-      // console.log("Preview item.status : ", item.status);
-      let br = false;
-      // console.log("Preview item.status : ", item.status);
-      if (item.status == "C") {
-        br = true;
-      } else {
-        br = false;
-      }
-
-      // console.log("Preview br : ", br);
-      return br;
-    },
-    chkBtnDelStatus(item) {
-      // console.log("Del item: ", JSON.stringify(item));
-
-      // (item.status != "C" && !item.wo_running_no) || !authorize_del;
-      let br = false;
-      // console.log("Del item.wo_running_no : ", item.wo_running_no);
-      // console.log("Del item.status : ", item.status);
-      // console.log("Del authorize_del : ", this.authorize_del);
-      if (!this.authorize_del) {
-        br = false;
-      } else if (item.status != "C" && !item.wo_running_no) {
-        br = true;
-      } else {
-        br = false;
-      }
-
-      if (item.status == "A") {
-        br = false;
-      }
-      // console.log("Del br : ", br);
-      return br;
-    },
-    chkBtnEditStatus(item) {
-      //item.status != 'C' || !authorize_edit
-      let br = false;
-      // console.log("Edit item.status : ", item.status);
-      // console.log("Edit authorize_edit : ", this.authorize_edit);
-      if (!this.authorize_edit) {
-        br = false;
-      } else if (item.status != "C") {
-        br = true;
-      } else {
-        br = false;
-      }
-
-      // console.log("Edit br : ", br);
-
-      return br;
-    },
-    async onClickedEdit(item) {
-      // alert("onClickedEdit");
-      // alert(JSON.stringify(item));
-      // this.$store.state.work_order_edit_item = item;
-      localStorage.setItem(server.WO_EDIT_ITEM, JSON.stringify(item));
-      this.$router.push(`/production-order-edit/${item.id}`);
-    },
-    async onClickedBack() {
-      // alert("onClickedBack");
-      this.$router.back();
-    },
-    async loadAccountsAll() {
-      const resultList = await api.getAccountslist();
-      this.approver_all_show = resultList.data;
-    },
-    async loadAccountsActive() {
-      const resultList = await api.getAccountslistActive();
-      this.approver_active_show = resultList.data;
-    },
-    async changeCompany(selectObj) {
-      // console.log(selectObj)
-      // alert(selectObj);
-      await this.loadDepartmentMaster(selectObj);
-      await this.loadPositionMaster(selectObj);
-    },
-    async changeDepartment(department_id) {
-      this.department.filter((x, index) => {
-        if (x.id == department_id) {
-          this.editedItem.dimension = x.dimension;
-          this.editedItem.sub_dimension = x.sub_dimension;
-          return;
-        }
-      });
-    },
-    addEmp() {
-      // alert("addEmp");
-      this.initial_data1 = "";
-      this.initial_dataimage = "";
-      this.initial_data2 = "";
-      this.image = null;
-      this.toggleDisable = true;
-    },
-    getImage() {
-      // console.log(`url_img : ${imageUrl}/${this.editedItem.image}`);
-      this.img_preview = `${imageUrl}/${this.editedItem.image}`;
-      return `${imageUrl}/${this.editedItem.image}`;
-    },
-    async onFileSelected(event) {
-      // console.log("onFileSelected");
-      try {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          // for preview image
-          this.imageURL = event.target.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-
-        // for upload image
-        this.editedItem.image = event.target.files[0];
-
-        const toBase64 = (file) =>
-          new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = (error) => reject(error);
-          });
-
-        this.img_preview = await await toBase64(this.editedItem.image);
-        // console.log("onFileSelected result image body : ", this.img_preview);
-
-        // console.log(
-        //   "onFileSelected result image body : ",
-        //   this.editedItem.image
-        // );
-      } catch (error) {
-        console.log("onFileSelected error:", error);
-      }
-    },
-    getBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      });
-    },
 
     async searchData() {
       this.desserts = [];
+      this.dessertssum = [];
       this.$showLoader();
 
       if(this.datasearch.work_center_group_id){
@@ -1164,6 +1153,26 @@ async loadDownTimeCause() {
         if(i == result.data.length -1){
 await this.checkcontent(this.desserts);
  await this.setexporttoxlsx(this.desserts);
+ const grouped = Object.values(
+  this.desserts.reduce((acc, curr) => {
+    if (!acc[curr.description]) {
+      acc[curr.description] = { description: curr.description, work_hours: 0 };
+    }
+    acc[curr.description].work_hours += curr.work_hours;
+    return acc;
+  }, {})
+);
+const totalHours = grouped.reduce((sum, item) => sum + item.work_hours, 0);
+
+const withPercent = [
+  ...grouped.map(item => ({
+    ...item,
+    percent: ((item.work_hours / totalHours) * 100).toFixed(2) + "%"
+  })),
+  // { description: "รวม", work_hours: totalHours, percent: "" }
+];
+this.dessertssum = withPercent;
+
         }
         });
 
@@ -1171,34 +1180,10 @@ await this.checkcontent(this.desserts);
       this.$hideLoader();
     },
 
-    async loadCompanyMaster(id) {
-      // console.log("result3:" + id);
-      const result = await api.getCompanyMaster(id);
-      // console.log("result3:" + JSON.stringify(result.data));
-      this.company = result.data;
-    },
-
-    async loadDepartmentMaster(id) {
-      const result = await api.getDepartmentByCompanyID(id);
-      this.department = result.data;
-      result.data.forEach((item) => {
-        this.department_list.push(item.name);
-      });
-    },
     async loadAuthorize() {
       const res_get = await api.getSettingGroupMenu();
       this.authorize = res_get.data;
     },
-
-    async loadDivisionMaster(id) {
-      const result = await api.getDivisionByCompanyID(id);
-      this.position = result.data;
-
-      result.data.forEach((item) => {
-        this.position_list.push(item.name);
-      });
-    },
-
 
     initialize() {
     },
@@ -1728,13 +1713,6 @@ await this.checkcontent(this.desserts);
     },
     getgroupnamedowntime(item) {
       return `${item.reason_code}:${item.description}`;
-    },
-    selectdoc_type_name(doc_type) {
-      this.dessertsdetail = [];
-      this.dessertssum = [];
-      this.doc_type_name = this.doc_type.find((obj) => {
-        return obj.id === doc_type;
-      }).status_name;
     },
     async savechangeapproval() {
       if (this.itemchangeapproval.oldapproval == "") {
@@ -2557,4 +2535,7 @@ footer {
 .setfontfamily {
   font-family: "Roboto", sans-serif;
 }
+/* .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
+    text-align: center !important;
+} */
 </style>
