@@ -1208,13 +1208,13 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
-      // cut Production Order Production Costing Report menu
+      // cut Reprot Costing Report menu
       if (item.cmd_route == "re-cal-costing" && item.smd_view == 0) {
         this.subproductionorderrecalcosting = true;
         let getremoveindex = [];
         let indexsubmenu = -1;
         this.menus.forEach((itemmenu, index) => {
-          if (itemmenu.title == "Production Order") {
+          if (itemmenu.title == "Report") {
             indexsubmenu = index;
             this.menus[index].items.forEach((x, i) => {
               if (x.title == "Production Costing Report") {
@@ -1227,12 +1227,33 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
+            // cut Reprot รายงานเวลาที่สูญเสีย menu
+      if (item.cmd_route == "report-lost-time" && item.smd_view == 0) {
+        this.subreportlosttime = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Report") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "รายงานเวลาที่สูญเสีย") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+      
+
       if (
         this.subreporttimecardreport &&
         this.subreportreportoninquiriesaboutclothregistration &&
         this.subreportleadertimecardreport &&
         this.subproductionorderproductionstatusreport &&
-        this.subproductionorderrecalcosting
+        this.subproductionorderrecalcosting &&
+        this.subreportlosttime
       ) {
         let getremoveindex = [];
         this.menus.forEach((itemmenu, index) => {
@@ -1264,6 +1285,7 @@ export default {
   },
   data() {
     return {
+      subreportlosttime:false,
       subholidaymenu: false,
       subkpimastermenu: false,
       subgroupmenu: false,
@@ -1659,6 +1681,11 @@ export default {
               index: 6,
               title: "Production Costing Report",
               route: "/re-cal-costing",
+            },
+             {
+              index: 6,
+              title: "รายงานเวลาที่สูญเสีย",
+              route: "/report-lost-time",
             },
           ],
         },
