@@ -1194,6 +1194,9 @@ async loadDownWorker() {
                   );
                   this.datasearch.wc_group = getrcg[0].work_center_group_id;
                   }
+                  else{
+                    this.datasearch.wc_group = null;
+                  }
       const result =  await api.GetWasteReport(this.datasearch
       //   {datefrom:this.datefrom,dateto:this.dateto,
       //   wc_group:this.datasearch.wc_group,wc_id:this.datasearch.work_center_id,

@@ -1137,6 +1137,8 @@ async loadDownTimeCause() {
                     (item) => item.id == this.datasearch.work_center_group_id
                   );
                   this.datasearch.wc_group = getrcg[0].work_center_group_id;
+                  }else{
+                    this.datasearch.wc_group = null;
                   }
       const result =  await api.GetListTimeReport(this.datasearch
       //   {datefrom:this.datefrom,dateto:this.dateto,
