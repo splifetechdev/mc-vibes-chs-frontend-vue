@@ -9,8 +9,16 @@
             </v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-col cols="12" md="3">
-             <v-autocomplete class="" label="Work Center Group" v-model="datasearch.work_center_group_id" outlined
-              dense :items="workCenterGroups" item-text="label" item-value="id" @change="changworkcentergrouptogetworkcenter" clearable></v-autocomplete>
+              <v-autocomplete class="mx-2" label="Work Center Group" v-model="datasearch.work_center_group_id" hide-details outlined
+              dense :items="workCenterGroups" item-text="label" item-value="id" @change="changworkcentergrouptogetworkcenter" clearable
+              @click:clear="
+                  $nextTick(() => {
+                    datasearch.work_center_id = null;
+                    datasearch.mch_id = null;
+                    workcenterlist = [];
+                    machinelist = [];
+                  })
+                  "></v-autocomplete>
             </v-col>
             
             <v-col cols="12" md="3">
@@ -25,6 +33,12 @@
                           dense
                           @change="changworkcentertogetmch"
                           clearable
+                           @click:clear="
+                  $nextTick(() => {
+                    datasearch.mch_id = null;
+                     machinelist = [];
+                  })
+                  "
                         ></v-autocomplete>
             </v-col>
 
@@ -950,11 +964,18 @@ async loadDownWorker() {
       // wb.Sheets.summary_activity_report.F1 = { t: "s", c: 0, v: "" };
       // wb.Sheets.summary_activity_report.G1 = { t: "s", c: 0, v: "" };
 
+
       wb.Sheets.summary_activity_report.A1 = { t: "s", v: "Date" };
-      wb.Sheets.summary_activity_report.B1 = { t: "s", v: "Time" };
-      wb.Sheets.summary_activity_report.C1 = { t: "s", v: "Machine Name" };
-      wb.Sheets.summary_activity_report.D1 = { t: "s", v: "Downtime Cause" };
-      wb.Sheets.summary_activity_report.E1 = { t: "s", v: "Hours" };
+      wb.Sheets.summary_activity_report.B1 = { t: "s", v: "ORD" };
+      wb.Sheets.summary_activity_report.C1 = { t: "s", v: "MCH" };
+      wb.Sheets.summary_activity_report.D1 = { t: "s", v: "Item ID" };
+      wb.Sheets.summary_activity_report.E1 = { t: "s", v: "Item Name" };
+      wb.Sheets.summary_activity_report.F1 = { t: "s", v: "OPN Desc." };
+      wb.Sheets.summary_activity_report.G1 = { t: "s", v: "Batch" };
+      wb.Sheets.summary_activity_report.H1 = { t: "s", v: "Worker" };
+      wb.Sheets.summary_activity_report.I1 = { t: "s", v: "QTY" };
+      wb.Sheets.summary_activity_report.J1 = { t: "s", v: "Defect QTY" };
+      wb.Sheets.summary_activity_report.K1 = { t: "s", v: "% Defect" };
 
       // wb.Sheets.summary_activity_report["!merges"] = merge;
     },
@@ -971,14 +992,21 @@ async loadDownWorker() {
       //     Total: x.Total,
       //   });
       // });
+
       let setexportxlsx = [];
       dataexport.forEach((x, index) => {
         setexportxlsx.splice(index + 0, 0, {
           tcdate: x.tcdate,
-          time: x.time,
-          machine_id: x.machine_id,
-          description: x.description,
-          work_hours: x.work_hours,
+          work_order: x.work_order,
+          machine: x.machine,
+          itemID: x.itemID,
+          item_name: x.item_name,
+          opn_desc: x.opn_desc,
+          batch_count: x.batch_count,
+          worker_name: x.worker_name,
+          qty: Number(x.qty),
+          defectqty: Number(x.defectqty),
+          percentqty: Number(x.percentqty),
         });
       });
       this.sheets[0].data = setexportxlsx;
@@ -993,9 +1021,9 @@ async loadDownWorker() {
       //checklineforsig = เช็คบรรทัดของ detail เพื่อแสดงลายเซ็น
       let checklineforsig = 10;
       //linedetailprpo คือ บรรทัดทั้งหมดของหน้า
-      let linedetailprpo = 36;
+      let linedetailprpo = 24;
       //datainlineprpo คือ ข้อมูลแต่ละบรรทัด
-      let datainlineprpo = 24;
+      let datainlineprpo = 21;
       let addnewbutget = 0;
       let getdata = [];
       let getnewdata = [];
@@ -1024,7 +1052,7 @@ async loadDownWorker() {
         dataprint[i].no = i + 1;
         // this.sumqtyorderpo += dataprint[i].qty;
 
-        stringchecklength = dataprint[i].wh_name ? dataprint[i].wh_name : "";
+        stringchecklength = dataprint[i].worker_name ? dataprint[i].worker_name :dataprint[i].item_name?dataprint[i].item_name: "";
         let stringcutnewline = stringchecklength.split("\n");
 
         stringcutnewline.forEach((x, index) => {
@@ -1209,9 +1237,7 @@ async loadDownWorker() {
         result.data.forEach(async(x,i)=>{
           x.percentqty = (((x.defectqty / x.qty) * 100).toFixed(2) + "") !== "Infinity"?(((x.defectqty / x.qty) * 100).toFixed(2) + ""):0;
         this.desserts.push(x);
-        
         if(i == result.data.length -1){
-          console.log(this.desserts)
 await this.checkcontent(this.desserts);
  await this.setexporttoxlsx(this.desserts);
 

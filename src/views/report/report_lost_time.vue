@@ -10,7 +10,15 @@
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-col cols="12" md="3">
              <v-autocomplete class="mx-2" label="Work Center Group" v-model="datasearch.work_center_group_id" hide-details outlined
-              dense :items="workCenterGroups" item-text="label" item-value="id" @change="changworkcentergrouptogetworkcenter" clearable></v-autocomplete>
+              dense :items="workCenterGroups" item-text="label" item-value="id" @change="changworkcentergrouptogetworkcenter" clearable
+              @click:clear="
+                  $nextTick(() => {
+                    datasearch.work_center_id = null;
+                    datasearch.mch_id = null;
+                    workcenterlist = [];
+                    machinelist = [];
+                  })
+                  "></v-autocomplete>
             </v-col>
             
             <v-col cols="12" md="3">
@@ -25,6 +33,12 @@
                           dense
                           @change="changworkcentertogetmch"
                           clearable
+                           @click:clear="
+                  $nextTick(() => {
+                    datasearch.mch_id = null;
+                     machinelist = [];
+                  })
+                  "
                         ></v-autocomplete>
             </v-col>
 
@@ -968,7 +982,7 @@ async loadDownTimeCause() {
         dataprint[i].no = i + 1;
         // this.sumqtyorderpo += dataprint[i].qty;
 
-        stringchecklength = dataprint[i].wh_name ? dataprint[i].wh_name : "";
+        stringchecklength = dataprint[i].description ? dataprint[i].description : "";
         let stringcutnewline = stringchecklength.split("\n");
 
         stringcutnewline.forEach((x, index) => {
