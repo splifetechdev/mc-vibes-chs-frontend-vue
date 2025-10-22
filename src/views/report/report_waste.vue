@@ -295,13 +295,13 @@
                     <tr>
                       <th
                         scope="colgroup"
-                        class="prborderbottom prbordertop prborderleft width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                        class="prborderbottom prbordertop prborderleft width12 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
                         Date
                       </th>
                       <th
                         scope="colgroup"
-                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                        class="prborderbottom prbordertop width12 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
                         ORD
                       </th>
@@ -337,7 +337,7 @@
                       </th>
                        <th
                         scope="colgroup"
-                        class="prborderbottom prbordertop width15 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
                         Worker
                       </th>
@@ -355,7 +355,7 @@
                       </th>
                        <th
                         scope="colgroup"
-                        class="prborderbottom prbordertop width7 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                        class="prborderbottom prbordertop width5 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
                         % Defect
                       </th>
@@ -390,14 +390,14 @@
                         {{ data.itemID ? data.itemID : "-" }}
                       </td>
                       <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
                       >
                         {{ data.item_name ? data.item_name : "-" }}
                       </td>
                        <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
                       >
                         {{ data.opn_desc ? data.opn_desc : "-" }}
                       </td>
@@ -408,8 +408,8 @@
                         {{ data.batch_count ? data.batch_count : "-" }}
                       </td>
                        <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
                       >
                         {{ data.worker_name ? data.worker_name : "-" }}
                       </td>
@@ -2401,6 +2401,10 @@ td {
 .width10 {
   word-wrap: break-word;
   width: 10%;
+}
+.width12 {
+  word-wrap: break-word;
+  width: 12%;
 }
 .width20 {
   word-wrap: break-word;
