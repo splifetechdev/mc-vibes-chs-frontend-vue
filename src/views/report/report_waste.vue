@@ -187,9 +187,13 @@
             nextIcon: 'mdi-plus',
           }"
         >
-          <!-- <template v-slot:item.percentqty="{ item }">
-            {{ (item.defectqty?item.defectqty:0)/(item.qty?item.qty:0) }}
-          </template> -->
+          <template v-slot:item.qty="{ item }">
+            {{ fntolocalestringnumber(item.qty) }}
+          </template>
+
+          <template v-slot:item.defectqty="{ item }">
+            {{ fntolocalestringnumber(item.defectqty) }}
+          </template>
           <!-- <template v-slot:item.due_date="{ item }">
             {{ formatDate(item.due_date) }}
           </template> -->
@@ -215,30 +219,30 @@
               <td style="text-align: right;">
                 <h4>
                   {{
-                      desserts.reduce(
+                      fntolocalestringnumber(desserts.reduce(
                         (sum, item) => sum + item.qty,
                         0
-                      ).toFixed(2)
+                      ))
                   }}
                 </h4>
               </td>
                 <td style="text-align: right;">
                 <h4>
                   {{
-                      desserts.reduce(
+                      fntolocalestringnumber(desserts.reduce(
                         (sum, item) => sum + item.defectqty,
                         0
-                      ).toFixed(2)
+                      ))
                   }}
                 </h4>
               </td>
                     <td style="text-align: right;">
                 <h4>
                   {{
-                      desserts.reduce(
+                      fntolocalestringnumber(desserts.reduce(
                         (sum, item) => sum + Number(item.percentqty),
                         0
-                      ).toFixed(2)
+                      ))
                   }}
                 </h4>
               </td>
@@ -339,7 +343,7 @@
                       </th>
                        <th
                         scope="colgroup"
-                        class="prborderbottom prbordertop width7 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
                         QTY
                       </th>
@@ -413,13 +417,13 @@
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
                         style="padding-right: 2px;"
                       >
-                        {{ data.qty ? data.qty : "-" }}
+                        {{ data.qty ? fntolocalestringnumber(data.qty) : "-" }}
                       </td>
                        <td
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
                         style="padding-right: 2px;"
                       >
-                        {{ data.defectqty ? data.defectqty : "-" }}
+                        {{ data.defectqty ? fntolocalestringnumber(data.defectqty) : "-" }}
                       </td>
                        <td
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
@@ -1848,6 +1852,9 @@ await this.checkcontent(this.desserts);
     },
     cancelchangeapproval() {
       this.dialogchangeapproval = false;
+    },
+     fntolocalestringnumber(price) {
+      return tolocalestringnumber(price);
     },
     setupAlertDialog(status, title, message, text_color) {
       this.title = title;

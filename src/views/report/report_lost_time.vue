@@ -159,9 +159,9 @@
             nextIcon: 'mdi-plus',
           }"
         >
-          <!-- <template v-slot:item.time="{ item }">
-            {{ item.time_start }} - {{ item.time_end }}
-          </template> -->
+          <template v-slot:work_hours.time="{ item }">
+            {{ fntolocalestringnumber(item.work_hours) }}
+          </template>
           <!-- <template v-slot:item.due_date="{ item }">
             {{ formatDate(item.due_date) }}
           </template> -->
@@ -189,6 +189,13 @@
             nextIcon: 'mdi-plus',
           }"
         >
+         <template v-slot:item.work_hours="{ item }">
+            {{ fntolocalestringnumber(item.work_hours) }}
+          </template>
+        <!-- <template v-slot:item.percent="{ item }">
+            {{ fntolocalestringnumber(item.percent) }}
+          </template> -->
+          
                   <template v-slot:body.append>
             <tr class="sticky-table-footer">
               <td style="text-align: left;">
@@ -200,7 +207,7 @@
                       dessertssum.reduce(
                         (sum, item) => sum + item.work_hours,
                         0
-                      )
+                      ).toFixed(2)
                   }}
                 </h4>
               </td>
@@ -316,7 +323,7 @@
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
                         style="padding-right: 2px;"
                       >
-                        {{ data.work_hours ? data.work_hours : "-" }}
+                        {{ data.work_hours ? fntolocalestringnumber(data.work_hours) : "-" }}
                       </td>
                     </tr>
                   </table>
@@ -376,7 +383,7 @@
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
                         style="padding-right: 2px;"
                       >
-                        {{ data.work_hours ? data.work_hours : "-" }}
+                        {{ data.work_hours ? fntolocalestringnumber(data.work_hours) : "-" }}
                       </td>
                       <td
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
@@ -395,7 +402,7 @@
                       <td
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
                       >
-                        {{ dessertssum.reduce((sum, item) => sum + item.work_hours, 0) }}
+                        {{ fntolocalestringnumber(dessertssum.reduce((sum, item) => sum + item.work_hours, 0)) }}
                       </td>
                       <td
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
@@ -538,6 +545,7 @@ import {
   XlsxSheet,
   XlsxDownload,
 } from "vue-xlsx";
+import { tolocalestringnumber} from "../jsfunction/tolocalestringnumber";
 
 export default {
   data: (vm) => ({
@@ -1796,6 +1804,9 @@ this.dessertssum = withPercent;
     },
     cancelchangeapproval() {
       this.dialogchangeapproval = false;
+    },
+    fntolocalestringnumber(price) {
+      return tolocalestringnumber(price);
     },
     setupAlertDialog(status, title, message, text_color) {
       this.title = title;
