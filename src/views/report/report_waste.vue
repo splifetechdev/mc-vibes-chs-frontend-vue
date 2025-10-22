@@ -218,7 +218,7 @@
                       desserts.reduce(
                         (sum, item) => sum + item.qty,
                         0
-                      )
+                      ).toFixed(2)
                   }}
                 </h4>
               </td>
@@ -228,7 +228,7 @@
                       desserts.reduce(
                         (sum, item) => sum + item.defectqty,
                         0
-                      )
+                      ).toFixed(2)
                   }}
                 </h4>
               </td>
@@ -238,7 +238,7 @@
                       desserts.reduce(
                         (sum, item) => sum + Number(item.percentqty),
                         0
-                      )
+                      ).toFixed(2)
                   }}
                 </h4>
               </td>
@@ -1052,7 +1052,7 @@ async loadDownWorker() {
         dataprint[i].no = i + 1;
         // this.sumqtyorderpo += dataprint[i].qty;
 
-        stringchecklength = dataprint[i].worker_name ? dataprint[i].worker_name :dataprint[i].item_name?dataprint[i].item_name: "";
+        stringchecklength = dataprint[i].item_name?dataprint[i].item_name: "";
         let stringcutnewline = stringchecklength.split("\n");
 
         stringcutnewline.forEach((x, index) => {
