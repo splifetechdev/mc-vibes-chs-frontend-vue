@@ -1245,6 +1245,27 @@ export default {
         for (var i = getremoveindex.length - 1; i >= 0; i--)
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
+
+                  // cut Reprot รายงานเวลาที่สูญเสีย menu
+      if (item.cmd_route == "report-waste" && item.smd_view == 0) {
+        this.subreportwaste = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Report") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "รายงานของเสีย") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
+      
       
 
       if (
@@ -1253,7 +1274,8 @@ export default {
         this.subreportleadertimecardreport &&
         this.subproductionorderproductionstatusreport &&
         this.subproductionorderrecalcosting &&
-        this.subreportlosttime
+        this.subreportlosttime && 
+        this.subreportwaste
       ) {
         let getremoveindex = [];
         this.menus.forEach((itemmenu, index) => {
@@ -1285,6 +1307,7 @@ export default {
   },
   data() {
     return {
+      subreportwaste:false,
       subreportlosttime:false,
       subholidaymenu: false,
       subkpimastermenu: false,
@@ -1686,6 +1709,11 @@ export default {
               index: 6,
               title: "รายงานเวลาที่สูญเสีย",
               route: "/report-lost-time",
+            },
+             {
+              index: 6,
+              title: "รายงานของเสีย",
+              route: "/report-waste",
             },
           ],
         },
