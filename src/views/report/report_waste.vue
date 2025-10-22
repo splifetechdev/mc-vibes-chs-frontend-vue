@@ -76,7 +76,7 @@
                           outlined
                           :items="ord_list"
                           v-model="datasearch.work_order"
-                          item-value="id"
+                          item-value="doc_running_no"
                           item-text="doc_running_no"
                           label="ORD"
                           dense
