@@ -4,12 +4,15 @@
       <v-row class="mt-5 ml-5 mr-5 mb-3">
         <v-col cols="12" md="12">
           <v-row>
+              <v-col cols="12" md="2">
             <v-toolbar-title class="text-h6 mt-4"
               >รายงานเวลาที่สูญเสีย :
             </v-toolbar-title>
-            <v-divider class="mx-4" inset vertical></v-divider>
-            <v-col cols="12" md="3">
-             <v-autocomplete class="mx-2" label="Work Center Group" v-model="datasearch.work_center_group_id" hide-details outlined
+                     <!-- <v-divider class="mx-4" inset vertical></v-divider> -->
+            </v-col>
+   
+            <v-col cols="12" md="2">
+             <v-autocomplete class="" label="Work Center Group" v-model="datasearch.work_center_group_id" outlined
               dense :items="workCenterGroups" item-text="label" item-value="id" @change="changworkcentergrouptogetworkcenter" clearable
               @click:clear="
                   $nextTick(() => {
@@ -21,7 +24,7 @@
                   "></v-autocomplete>
             </v-col>
             
-            <v-col cols="12" md="3">
+            <v-col cols="12" md="2">
                <v-autocomplete
                           required
                           outlined
@@ -42,7 +45,7 @@
                         ></v-autocomplete>
             </v-col>
 
-            <v-col cols="12" md="3">
+            <v-col cols="12" md="2">
                <v-autocomplete
                           required
                           outlined
@@ -56,7 +59,7 @@
                         ></v-autocomplete>
             </v-col>
 
-             <v-col cols="12" md="3">
+             <v-col cols="12" md="2">
                <v-autocomplete
                           required
                           outlined
@@ -70,7 +73,10 @@
                         ></v-autocomplete>
             </v-col>
 
- <v-col cols="12" md="3">
+            <v-col cols="12" md="2"></v-col>
+            <v-col cols="12" md="2"></v-col>
+
+ <v-col cols="12" md="2">
             <v-menu
                 v-model="menusearchdatefrom"
                 :close-on-content-click="false"
@@ -82,7 +88,6 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    hide-details
                     v-model="datasearch.datefrom"
                     persistent-hint
                     append-icon="mdi-calendar"
@@ -102,7 +107,7 @@
               </v-menu>
               </v-col>
 
-               <v-col cols="12" md="3">
+               <v-col cols="12" md="2">
             <v-menu
                 v-model="menusearchdateto"
                 :close-on-content-click="false"
@@ -114,7 +119,6 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    hide-details
                     v-model="datasearch.dateto"
                     persistent-hint
                     append-icon="mdi-calendar"
@@ -145,6 +149,8 @@
       </v-row>
 
       <div v-if="desserts.length > 0">
+         <v-row justify="center" align="center">
+           <v-col cols="12" md="10">
         <v-data-table
           :headers="headers"
           :items="desserts"
@@ -165,7 +171,33 @@
           <!-- <template v-slot:item.due_date="{ item }">
             {{ formatDate(item.due_date) }}
           </template> -->
+          
+                  <template v-slot:body.append>
+            <tr class="sticky-table-footer">
+               <td style="text-align: left;">
+              </td>
+               <td style="text-align: left;">
+              </td>
+               <td style="text-align: left;">
+              </td>
+              <td style="text-align: left;">
+                <h3>รวม</h3>
+              </td>
+              <td style="text-align: right;">
+                <h4>
+                  {{
+                      fntolocalestringnumber(dessertssum.reduce(
+                        (sum, item) => sum + item.work_hours,
+                        0
+                      ))
+                  }}
+                </h4>
+              </td>
+            </tr>
+          </template>
         </v-data-table>
+         </v-col>
+          </v-row>
 
         <v-row class="ma-6">
             <v-col cols="12" md="12">
@@ -173,8 +205,8 @@
             </v-col>
         </v-row>
 
-        <v-row class="ma-2">
-            <v-col cols="12" md="12">
+        <v-row class="ma-2" justify="center" align="center">
+            <v-col cols="12" md="8">
            <v-data-table
           :headers="headerssum"
           :items="dessertssum"
@@ -204,10 +236,10 @@
               <td style="text-align: right;">
                 <h4>
                   {{
-                      dessertssum.reduce(
+                      fntolocalestringnumber(dessertssum.reduce(
                         (sum, item) => sum + item.work_hours,
                         0
-                      ).toFixed(2)
+                      ))
                   }}
                 </h4>
               </td>
@@ -251,6 +283,49 @@
                       </h3>
                     </div>
                   </div>
+
+                    <div class="col-md-12">
+                 <div class="rowprpo mt-30prpo">
+                <div class="col-md-2 textalignleft ">
+                  WC_Group : 
+                </div>
+                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                  <span >{{ datasearch.wc_group?datasearch.wc_group:"ทั้งหมด" }}</span>
+                </div>
+                <div class="col-md-2 textalignleft pl30prpo">
+                  WC : 
+                </div>
+                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                   <span >{{ (() => {
+ const wc = workcenterlist.find(item => item.id == datasearch.work_center_id);
+  return wc && datasearch.work_center_id ? `${wc.wc_id}:${wc.wc_name}` : "ทั้งหมด";
+})() }}</span>
+<!-- - ${wc.wc_name} -->
+                </div>
+              </div>
+
+                <div class="rowprpo  mt-10prpo">
+                <div class="col-md-2 textalignleft ">
+                 Machine : 
+                </div>
+                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                                    <span >{{ (() => {
+ const wc = machinelist.find(item => item.id == datasearch.mch_id);
+  return wc && datasearch.mch_id ? `${wc.machine_id}:${wc.name}` : "ทั้งหมด";
+})() }}</span>
+                </div>
+                <div class="col-md-2 textalignleft pl30prpo">
+                   Downtime Cause : 
+                </div>
+                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                   <span >{{ (() => {
+ const wc = downtime_cause_list.find(item => item.id == datasearch.downtime_id);
+  return wc && datasearch.downtime_id ? `${wc.reason_code}:${wc.description}` : "ทั้งหมด";
+})() }}</span>
+                </div>
+              </div>
+
+              </div>
                 </div>
 
                 <div
@@ -296,8 +371,8 @@
                       id="content"
                     >
                       <td
-                        class="width20 textalignright prborderleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="position: relative;padding-right: 2px;"
+                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="position: relative;padding-left: 2px;"
                       >
                         {{ data.tcdate ? data.tcdate : "-" }}
                       </td>
@@ -412,6 +487,11 @@
                     </tr>
                   </table>
                 </div>
+                 <div class="footerprpo ">
+              <div class="alignright mr40prpo">
+                ผู้ปริ้น {{ fullname }} วันที่ {{ datenowFormatted }}
+              </div>
+            </div>
               </page>
             </div>
         </div>
@@ -549,6 +629,7 @@ import { tolocalestringnumber} from "../jsfunction/tolocalestringnumber";
 
 export default {
   data: (vm) => ({
+    fullname:"",
     menusearchdatefrom:false,
      menusearchdateto:false,
      downtime_cause_list:[],
@@ -660,7 +741,7 @@ dateto:vm.formatDate(
     headers: [
       {
         text: "Date",
-        align: "end",
+        align: "start",
         sortable: false,
         value: "tcdate",
       },
@@ -865,6 +946,7 @@ dateto:vm.formatDate(
     // ----------------- Check Authorize ---------------------------
     await this.loadWorkCenterGroup();
     await this.loadDownTimeCause();
+    await this.loadAccountsLogin();
     
 
     this.$hideLoader();
@@ -882,6 +964,12 @@ dateto:vm.formatDate(
   },
 
   methods: {
+    async loadAccountsLogin() {
+      const result = await api.getAccountid(
+        localStorage.getItem(server.USER_ID)
+      );
+      this.fullname = `${result.data.prename_th} ${result.data.firstname} ${result.data.lastname}`;
+    },
     async loadWorkCenterGroup() {
       const response = await api.getWorkCenterGroupMaster(
         localStorage.getItem(server.COMPANYID)
@@ -959,7 +1047,7 @@ async loadDownTimeCause() {
       //checklineforsig = เช็คบรรทัดของ detail เพื่อแสดงลายเซ็น
       let checklineforsig = 10;
       //linedetailprpo คือ บรรทัดทั้งหมดของหน้า
-      let linedetailprpo = 36;
+      let linedetailprpo = 34;
       //datainlineprpo คือ ข้อมูลแต่ละบรรทัด
       let datainlineprpo = 24;
       let addnewbutget = 0;
@@ -1155,10 +1243,10 @@ async loadDownTimeCause() {
       this.$showLoader();
 
       if(this.datasearch.work_center_group_id){
-       const getrcg =  this.workCenterGroups.filter(
-                    (item) => item.id == this.datasearch.work_center_group_id
-                  );
-                  this.datasearch.wc_group = getrcg[0].work_center_group_id;
+      //  const getrcg =  this.workCenterGroups.filter(
+      //               (item) => item.id == this.datasearch.work_center_group_id
+      //             );
+      //             this.datasearch.wc_group = getrcg[0].work_center_group_id;
                   }else{
                     this.datasearch.wc_group = null;
                   }
@@ -1710,6 +1798,10 @@ this.dessertssum = withPercent;
      async changworkcentergrouptogetworkcenter(work_center_group_id) {
       if(work_center_group_id){
        this.$showLoader();
+        const getrcg =  this.workCenterGroups.filter(
+                    (item) => item.id == this.datasearch.work_center_group_id
+                  );
+                  this.datasearch.wc_group = getrcg[0].work_center_group_id;
       const result = await api.getWorkCenterMaster(work_center_group_id);
       this.datasearch.work_center_id = null;
       this.datasearch.mch_id = null;
@@ -1956,7 +2048,8 @@ h3 {
 }
 h4 {
   font-size: 1em;
-  font-family: "Roboto", sans-serif;
+  font-family: "TH Sarabun New";
+  /* font-family: "Roboto", sans-serif; */
 }
 
 .test {
@@ -2063,14 +2156,16 @@ a {
   font-weight: 400;
   letter-spacing: 0.0333333333em;
   line-height: 1.25rem;
-  font-family: "Roboto", sans-serif;
+  font-family: "TH Sarabun New";
+  /* font-family: "Roboto", sans-serif; */
   /* font-family: Tahoma, sans-serif !important; */
 }
 .captionnofontsize {
   font-weight: 400;
   letter-spacing: 0.0333333333em;
   line-height: 1.5rem;
-  font-family: "Roboto", sans-serif;
+  font-family: "TH Sarabun New";
+  /* font-family: "Roboto", sans-serif; */
   /* font-family: Tahoma, sans-serif !important; */
 }
 .captiontableheader {
@@ -2078,7 +2173,8 @@ a {
   font-weight: 400;
   letter-spacing: 0.0333333333em;
   line-height: 2.25rem;
-  font-family: "Roboto", sans-serif;
+  font-family: "TH Sarabun New";
+  /* font-family: "Roboto", sans-serif; */
   /* font-family: Tahoma, sans-serif !important; */
 }
 /* .v-application .caption {
@@ -2170,6 +2266,9 @@ a {
 
 .mr30prpo {
   margin-right: 30px !important;
+}
+.mr40prpo {
+  margin-right: 40px !important;
 }
 .mt10prpo {
   margin-top: 10px !important;
@@ -2512,7 +2611,8 @@ footer {
 }
 .widthsignature {
   width: 3cm;
-  height: 1cm;
+  /* height: 1cm; */
+  height: 35px;
   align-content: center;
 }
 .positionrelative {
@@ -2560,7 +2660,8 @@ footer {
 }
 
 .setfontfamily {
-  font-family: "Roboto", sans-serif;
+  font-family: "TH Sarabun New";
+  /* font-family: "Roboto", sans-serif; */
 }
 /* .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
     text-align: center !important;
