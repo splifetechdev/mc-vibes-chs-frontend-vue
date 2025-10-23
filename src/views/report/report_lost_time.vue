@@ -287,13 +287,13 @@
                     <div class="col-md-12">
                  <div class="rowprpo mt-30prpo">
                 <div class="col-md-2 textalignleft ">
-                  WC_Group : 
+                  WC-Group
                 </div>
                 <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
                   <span >{{ datasearch.wc_group?datasearch.wc_group:"ทั้งหมด" }}</span>
                 </div>
                 <div class="col-md-2 textalignleft pl30prpo">
-                  WC : 
+                  WC
                 </div>
                 <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
                    <span >{{ (() => {
@@ -306,7 +306,7 @@
 
                 <div class="rowprpo  mt-10prpo">
                 <div class="col-md-2 textalignleft ">
-                 Machine : 
+                 Machine 
                 </div>
                 <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
                                     <span >{{ (() => {
@@ -315,13 +315,28 @@
 })() }}</span>
                 </div>
                 <div class="col-md-2 textalignleft pl30prpo">
-                   Downtime Cause : 
+                   Downtime Cause 
                 </div>
                 <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
                    <span >{{ (() => {
  const wc = downtime_cause_list.find(item => item.id == datasearch.downtime_id);
   return wc && datasearch.downtime_id ? `${wc.reason_code}:${wc.description}` : "ทั้งหมด";
 })() }}</span>
+                </div>
+              </div>
+
+                <div class="rowprpo  mt-30prpo">
+                <div class="col-md-2 textalignleft ">
+                 Date from 
+                </div>
+                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                                    <span >{{ datasearch.datefrom }}</span>
+                </div>
+                <div class="col-md-2 textalignleft pl30prpo">
+                  to 
+                </div>
+                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                   <span >{{ datasearch.dateto }}</span>
                 </div>
               </div>
 
@@ -469,13 +484,13 @@
                     </tr>
                     <tr>
                        <td
-                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
+                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
                         style="padding-left: 2px;"
                       >
                         รวม
                       </td>
                       <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
                       >
                         {{ fntolocalestringnumber(dessertssum.reduce((sum, item) => sum + item.work_hours, 0)) }}
                       </td>
@@ -1047,7 +1062,7 @@ async loadDownTimeCause() {
       //checklineforsig = เช็คบรรทัดของ detail เพื่อแสดงลายเซ็น
       let checklineforsig = 10;
       //linedetailprpo คือ บรรทัดทั้งหมดของหน้า
-      let linedetailprpo = 34;
+      let linedetailprpo = 33;
       //datainlineprpo คือ ข้อมูลแต่ละบรรทัด
       let datainlineprpo = 24;
       let addnewbutget = 0;
@@ -2655,6 +2670,94 @@ footer {
   font-weight: 900;
 }
 
+.col-md-1 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 8.333333333333333%;
+  flex: 0 0 8.333333333333333%;
+  max-width: 8.333333333333333%;
+}
+.col-md-2 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 16.66666666666667%;
+  flex: 0 0 16.66666666666667%;
+  max-width: 16.66666666666667%;
+}
+
+.col-md-3 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 20%;
+  flex: 0 0 20%;
+  max-width: 20%;
+}
+
+.col-md-4 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 33.33333333333333%;
+  flex: 0 0 33.33333333333333%;
+  max-width: 33.33333333333333%;
+}
+
+.col-md-5 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 41.66666666666667%;
+  flex: 0 0 41.66666666666667%;
+  max-width: 41.66666666666667%;
+}
+
+.col-md-6 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+.col-md-7 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 58.33333333333333%;
+  flex: 0 0 58.33333333333333%;
+  max-width: 58.33333333333333%;
+}
+.col-md-8 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 66.66666666666667%;
+  flex: 0 0 66.66666666666667%;
+  max-width: 66.66666666666667%;
+}
+.col-md-9 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 75%;
+  flex: 0 0 75%;
+  max-width: 75%;
+}
+.col-md-10 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 83.33333333333333%;
+  flex: 0 0 83.33333333333333%;
+  max-width: 83.33333333333333%;
+}
+.col-md-11 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 91.66666666666667%;
+  flex: 0 0 91.66666666666667%;
+  max-width: 91.66666666666667%;
+}
+.col-md-12 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
 .bgcolorgray {
   background-color: #b7b4b4 !important;
 }

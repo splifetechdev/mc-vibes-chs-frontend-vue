@@ -4,12 +4,14 @@
       <v-row class="mt-5 ml-5 mr-5 mb-3">
         <v-col cols="12" md="12">
           <v-row>
+              <v-col cols="12" md="2">
             <v-toolbar-title class="text-h6 mt-4"
               >รายงานของเสีย :
             </v-toolbar-title>
-            <v-divider class="mx-4" inset vertical></v-divider>
-            <v-col cols="12" md="3">
-              <v-autocomplete class="mx-2" label="Work Center Group" v-model="datasearch.work_center_group_id" hide-details outlined
+            <!-- <v-divider class="mx-4" inset vertical></v-divider> -->
+            </v-col>
+            <v-col cols="12" md="2">
+              <v-autocomplete class="" label="Work Center Group" v-model="datasearch.work_center_group_id" outlined
               dense :items="workCenterGroups" item-text="label" item-value="id" @change="changworkcentergrouptogetworkcenter" clearable
               @click:clear="
                   $nextTick(() => {
@@ -21,7 +23,7 @@
                   "></v-autocomplete>
             </v-col>
             
-            <v-col cols="12" md="3">
+            <v-col cols="12" md="2">
                <v-autocomplete
                           required
                           outlined
@@ -42,7 +44,7 @@
                         ></v-autocomplete>
             </v-col>
 
-            <v-col cols="12" md="3">
+            <v-col cols="12" md="2">
                <v-autocomplete
                           required
                           outlined
@@ -56,7 +58,7 @@
                         ></v-autocomplete>
             </v-col>
 
-             <v-col cols="12" md="3">
+             <v-col cols="12" md="2">
                <v-autocomplete
                           required
                           outlined
@@ -70,7 +72,7 @@
                         ></v-autocomplete>
             </v-col>
 
-               <v-col cols="12" md="3">
+               <v-col cols="12" md="2">
                <v-autocomplete
                           required
                           outlined
@@ -84,7 +86,9 @@
                         ></v-autocomplete>
             </v-col>
 
-               <v-col cols="12" md="3">
+             <v-col cols="12" md="2"></v-col>
+
+               <v-col cols="12" md="2">
                <v-autocomplete
                           required
                           outlined
@@ -98,7 +102,7 @@
                         ></v-autocomplete>
             </v-col>
 
- <v-col cols="12" md="3">
+ <v-col cols="12" md="2">
             <v-menu
                 v-model="menusearchdatefrom"
                 :close-on-content-click="false"
@@ -110,7 +114,6 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    hide-details
                     v-model="datasearch.datefrom"
                     persistent-hint
                     append-icon="mdi-calendar"
@@ -130,7 +133,7 @@
               </v-menu>
               </v-col>
 
-               <v-col cols="12" md="3">
+               <v-col cols="12" md="2">
             <v-menu
                 v-model="menusearchdateto"
                 :close-on-content-click="false"
@@ -142,7 +145,6 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    hide-details
                     v-model="datasearch.dateto"
                     persistent-hint
                     append-icon="mdi-calendar"
@@ -173,6 +175,8 @@
       </v-row>
 
       <div v-if="desserts.length > 0">
+        <v-row justify="center" align="center">
+           <v-col cols="12" md="10">
         <v-data-table
           :headers="headers"
           :items="desserts"
@@ -246,10 +250,11 @@
                   }}
                 </h4>
               </td>
-              <td style="text-align: center;"></td>
             </tr>
           </template>
         </v-data-table>
+        </v-col>
+        </v-row>
 
          
 
@@ -285,6 +290,74 @@
                       </h3>
                     </div>
                   </div>
+                     <div class="col-md-12">
+                 <div class="rowprpo mt-30prpo">
+                <div class="col-md-10percent textaligncenter">
+                  WC-Group 
+                </div>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                  <span >{{ datasearch.wc_group?datasearch.wc_group:"ทั้งหมด" }}</span>
+                </div>
+                  <div class="col-md-10percent textaligncenter">
+                  WC
+                </div>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                  <span >{{ (() => {
+ const wc = workcenterlist.find(item => item.id == datasearch.work_center_id);
+  return wc && datasearch.work_center_id ? `${wc.wc_id}:${wc.wc_name}` : "ทั้งหมด";
+})() }}</span>
+                </div>
+                  <div class="col-md-10percent textaligncenter">
+                  Machine 
+                </div>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                 <span >{{ (() => {
+ const wc = machinelist.find(item => item.id == datasearch.mch_id);
+  return wc && datasearch.mch_id ? `${wc.machine_id}:${wc.name}` : "ทั้งหมด";
+})() }}</span>
+                </div>
+  <div class="col-md-10percent textaligncenter">
+                  Worker 
+                </div>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                  <span >{{ (() => {
+ const wc = worker_list.find(item => item.id == datasearch.worker_id);
+  return wc && datasearch.worker_id ? `${wc.prename_th} ${wc.firstname} ${wc.lastname}` : "ทั้งหมด";
+})() }}</span>
+                </div>
+              </div>
+
+                     <div class="rowprpo mt10prpo">
+                <div class="col-md-10percent textaligncenter">
+                 Order 
+                </div>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                                 <span >{{ datasearch.work_order?datasearch.work_order:"ทั้งหมด" }}</span>
+                </div>
+                  <div class="col-md-10percent textaligncenter">
+                  Item
+                </div>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                  <span >{{ (() => {
+ const wc = item_master_list.find(item => item.id == datasearch.item_id);
+  return wc && datasearch.item_id ? `${wc.item_id}` : "ทั้งหมด";
+})() }}</span>
+                </div>
+                  <div class="col-md-10percent textaligncenter">
+                   Date from 
+                </div>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+               <span >{{ datasearch.datefrom }}</span>
+                </div>
+  <div class="col-md-10percent textaligncenter">
+                  to 
+                </div>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                  <span >{{ datasearch.dateto }}</span>
+                </div>
+              </div>
+
+              </div>
                 </div>
 
                 <div
@@ -366,8 +439,8 @@
                       id="content"
                     >
                       <td
-                        class="width20 textalignright prborderleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="position: relative;padding-right: 2px;"
+                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="position: relative;padding-left: 2px;"
                       >
                         {{ data.tcdate ? data.tcdate : "-" }}
                       </td>
@@ -430,6 +503,82 @@
                         style="padding-right: 2px;"
                       >
                         {{ data.percentqty ? data.percentqty : "-" }}
+                      </td>
+                    </tr>
+                    <tr class="textfontbold" v-if="pageAll == index">
+                      <td
+                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
+                        style="padding-left: 2px;"
+                      >
+                        รวม
+                      </td>
+                      <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
+                        style="padding-right: 2px;"
+                      >
+                        {{
+                      fntolocalestringnumber(desserts.reduce(
+                        (sum, item) => sum + item.qty,
+                        0
+                      ))
+                  }}
+                      </td>
+                       <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
+                        style="padding-right: 2px;"
+                      >
+                      {{
+                      fntolocalestringnumber(desserts.reduce(
+                        (sum, item) => sum + item.defectqty,
+                        0
+                      ))
+                  }}
+                      </td>
+                                             <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
+                        style="padding-right: 2px;"
+                      >
+                      {{
+                      fntolocalestringnumber(desserts.reduce(
+                        (sum, item) => sum + Number(item.percentqty),
+                        0
+                      ))
+                  }}
                       </td>
                     </tr>
                   </table>
@@ -574,6 +723,7 @@ import {
 
 export default {
   data: (vm) => ({
+    fullname:"",
     menusearchdatefrom:false,
      menusearchdateto:false,
      worker_list:[],
@@ -689,7 +839,7 @@ dateto:vm.formatDate(
     headers: [
       {
         text: "Date",
-        align: "end",
+        align: "start",
         sortable: false,
         value: "tcdate",
       },
@@ -902,6 +1052,7 @@ dateto:vm.formatDate(
     await this.loadDownWorker();
     await this.loadORD();
     await this.loadItemMaster();
+    await this.loadAccountsLogin();
     
 
     this.$hideLoader();
@@ -919,6 +1070,12 @@ dateto:vm.formatDate(
   },
 
   methods: {
+    async loadAccountsLogin() {
+      const result = await api.getAccountid(
+        localStorage.getItem(server.USER_ID)
+      );
+      this.fullname = `${result.data.prename_th} ${result.data.firstname} ${result.data.lastname}`;
+    },
     async loadWorkCenterGroup() {
       const response = await api.getWorkCenterGroupMaster(
         localStorage.getItem(server.COMPANYID)
@@ -1025,7 +1182,7 @@ async loadDownWorker() {
       //checklineforsig = เช็คบรรทัดของ detail เพื่อแสดงลายเซ็น
       let checklineforsig = 10;
       //linedetailprpo คือ บรรทัดทั้งหมดของหน้า
-      let linedetailprpo = 24;
+      let linedetailprpo = 22;
       //datainlineprpo คือ ข้อมูลแต่ละบรรทัด
       let datainlineprpo = 21;
       let addnewbutget = 0;
@@ -1221,10 +1378,10 @@ async loadDownWorker() {
       this.$showLoader();
 
       if(this.datasearch.work_center_group_id){
-       const getrcg =  this.workCenterGroups.filter(
-                    (item) => item.id == this.datasearch.work_center_group_id
-                  );
-                  this.datasearch.wc_group = getrcg[0].work_center_group_id;
+      //  const getrcg =  this.workCenterGroups.filter(
+      //               (item) => item.id == this.datasearch.work_center_group_id
+      //             );
+      //             this.datasearch.wc_group = getrcg[0].work_center_group_id;
                   }
                   else{
                     this.datasearch.wc_group = null;
@@ -1241,6 +1398,8 @@ async loadDownWorker() {
         result.data.forEach(async(x,i)=>{
           x.percentqty = (((x.defectqty / x.qty) * 100).toFixed(2) + "") !== "Infinity"?(((x.defectqty / x.qty) * 100).toFixed(2) + ""):0;
         this.desserts.push(x);
+         this.desserts.push(x);
+          this.desserts.push(x);
         if(i == result.data.length -1){
 await this.checkcontent(this.desserts);
  await this.setexporttoxlsx(this.desserts);
@@ -1755,9 +1914,13 @@ await this.checkcontent(this.desserts);
     openchangeapproval() {
       this.dialogchangeapproval = true;
     },
-     async changworkcentergrouptogetworkcenter(work_center_group_id) {
+       async changworkcentergrouptogetworkcenter(work_center_group_id) {
       if(work_center_group_id){
        this.$showLoader();
+        const getrcg =  this.workCenterGroups.filter(
+                    (item) => item.id == this.datasearch.work_center_group_id
+                  );
+                  this.datasearch.wc_group = getrcg[0].work_center_group_id;
       const result = await api.getWorkCenterMaster(work_center_group_id);
       this.datasearch.work_center_id = null;
       this.datasearch.mch_id = null;
@@ -2004,7 +2167,8 @@ h3 {
 }
 h4 {
   font-size: 1em;
-  font-family: "Roboto", sans-serif;
+  font-family: "TH Sarabun New";
+  /* font-family: "Roboto", sans-serif; */
 }
 
 .test {
@@ -2111,14 +2275,16 @@ a {
   font-weight: 400;
   letter-spacing: 0.0333333333em;
   line-height: 1.25rem;
-  font-family: "Roboto", sans-serif;
+  font-family: "TH Sarabun New";
+  /* font-family: "Roboto", sans-serif; */
   /* font-family: Tahoma, sans-serif !important; */
 }
 .captionnofontsize {
   font-weight: 400;
   letter-spacing: 0.0333333333em;
   line-height: 1.5rem;
-  font-family: "Roboto", sans-serif;
+  font-family: "TH Sarabun New";
+  /* font-family: "Roboto", sans-serif; */
   /* font-family: Tahoma, sans-serif !important; */
 }
 .captiontableheader {
@@ -2126,7 +2292,8 @@ a {
   font-weight: 400;
   letter-spacing: 0.0333333333em;
   line-height: 2.25rem;
-  font-family: "Roboto", sans-serif;
+  font-family: "TH Sarabun New";
+  /* font-family: "Roboto", sans-serif; */
   /* font-family: Tahoma, sans-serif !important; */
 }
 /* .v-application .caption {
@@ -2218,6 +2385,9 @@ a {
 
 .mr30prpo {
   margin-right: 30px !important;
+}
+.mr40prpo {
+  margin-right: 40px !important;
 }
 .mt10prpo {
   margin-top: 10px !important;
@@ -2564,7 +2734,8 @@ footer {
 }
 .widthsignature {
   width: 3cm;
-  height: 1cm;
+  /* height: 1cm; */
+  height: 25px;
   align-content: center;
 }
 .positionrelative {
@@ -2603,6 +2774,109 @@ footer {
   border-top: thin solid rgba(0, 0, 0, 0.12);
 }
 
+.col-md-10percent {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 10%;
+  flex: 0 0 10%;
+  max-width: 10%;
+}
+
+.col-md-15percent {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 15%;
+  flex: 0 0 15%;
+  max-width: 15%;
+}
+.col-md-1 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 8.333333333333333%;
+  flex: 0 0 8.333333333333333%;
+  max-width: 8.333333333333333%;
+}
+.col-md-2 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 16.66666666666667%;
+  flex: 0 0 16.66666666666667%;
+  max-width: 16.66666666666667%;
+}
+
+.col-md-3 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 20%;
+  flex: 0 0 20%;
+  max-width: 20%;
+}
+
+.col-md-4 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 33.33333333333333%;
+  flex: 0 0 33.33333333333333%;
+  max-width: 33.33333333333333%;
+}
+
+.col-md-5 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 41.66666666666667%;
+  flex: 0 0 41.66666666666667%;
+  max-width: 41.66666666666667%;
+}
+
+.col-md-6 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+.col-md-7 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 58.33333333333333%;
+  flex: 0 0 58.33333333333333%;
+  max-width: 58.33333333333333%;
+}
+.col-md-8 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 66.66666666666667%;
+  flex: 0 0 66.66666666666667%;
+  max-width: 66.66666666666667%;
+}
+.col-md-9 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 75%;
+  flex: 0 0 75%;
+  max-width: 75%;
+}
+.col-md-10 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 83.33333333333333%;
+  flex: 0 0 83.33333333333333%;
+  max-width: 83.33333333333333%;
+}
+.col-md-11 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 91.66666666666667%;
+  flex: 0 0 91.66666666666667%;
+  max-width: 91.66666666666667%;
+}
+.col-md-12 {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
 .textfontbold {
   font-weight: 900;
 }
@@ -2612,9 +2886,11 @@ footer {
 }
 
 .setfontfamily {
-  font-family: "Roboto", sans-serif;
+   font-family: "TH Sarabun New";
+  /* font-family: "Roboto", sans-serif; */
 }
 /* .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
     text-align: center !important;
 } */
+
 </style>
