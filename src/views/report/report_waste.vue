@@ -1398,8 +1398,6 @@ async loadDownWorker() {
         result.data.forEach(async(x,i)=>{
           x.percentqty = (((x.defectqty / x.qty) * 100).toFixed(2) + "") !== "Infinity"?(((x.defectqty / x.qty) * 100).toFixed(2) + ""):0;
         this.desserts.push(x);
-         this.desserts.push(x);
-          this.desserts.push(x);
         if(i == result.data.length -1){
 await this.checkcontent(this.desserts);
  await this.setexporttoxlsx(this.desserts);
