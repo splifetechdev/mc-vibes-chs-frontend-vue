@@ -53,3 +53,7 @@ export const GetListTimeReport = (data) => {
 export const GetWasteReport = (data) => {
   return httpClient.post(server.REPORT_ALL + `/report_waste`, data);
 };
+
+export const GetListPerformanceReport = (data) => {
+  return httpClient.post(server.REPORT_ALL + `/report_performance`, data);
+};

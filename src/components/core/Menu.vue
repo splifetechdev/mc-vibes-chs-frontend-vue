@@ -1265,6 +1265,27 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
+              // cut Reprot รายงานประสิทธิภาพการผลิต menu
+      if (
+        item.cmd_route == "report-performance-product" &&
+        item.smd_view == 0
+      ) {
+        this.subreportreportperformanceproduct = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Report") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "รายงานประสิทธิภาพการผลิต") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
       
       
 
@@ -1275,6 +1296,7 @@ export default {
         this.subproductionorderproductionstatusreport &&
         this.subproductionorderrecalcosting &&
         this.subreportlosttime && 
+        this.subreportreportperformanceproduct &&
         this.subreportwaste
       ) {
         let getremoveindex = [];
@@ -1307,6 +1329,7 @@ export default {
   },
   data() {
     return {
+      subreportreportperformanceproduct: false,
       subreportwaste:false,
       subreportlosttime:false,
       subholidaymenu: false,
@@ -1714,6 +1737,11 @@ export default {
               index: 6,
               title: "รายงานของเสีย",
               route: "/report-waste",
+            },
+            {
+              index: 6,
+              title: "รายงานประสิทธิภาพการผลิต",
+              route: "/report-performance-product",
             },
           ],
         },
