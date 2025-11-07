@@ -40,3 +40,7 @@ export const workerCheckIn = (data) => {
 export const import_Worker = (data) => {
   return httpClient.post(server.WORKER_URL + `/import_worker`,data);
 };
+
+export const getWorkerBystatus = () => {
+  return httpClient.get(server.WORKER_URL + `/getBystatus/`);
+};

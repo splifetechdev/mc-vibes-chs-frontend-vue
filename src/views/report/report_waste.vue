@@ -248,11 +248,11 @@
               </td>
                     <td style="text-align: right;">
                 <h4>
-                  {{
+                   {{
                     (
-                      (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) > 0
-                        ? (desserts.reduce((sum, item) => sum + Number(item.qty), 0) /
-                          desserts.reduce((sum, item) => sum + Number(item.defectqty), 0)) *
+                      (desserts.reduce((sum, item) => sum + Number(item.qty), 0) > 0
+                        ? (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) /
+                          desserts.reduce((sum, item) => sum + Number(item.qty), 0)) *
                         100
                         : 0
                       ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -585,9 +585,9 @@
                       >
                       {{
                     (
-                      (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) > 0
-                        ? (desserts.reduce((sum, item) => sum + Number(item.qty), 0) /
-                          desserts.reduce((sum, item) => sum + Number(item.defectqty), 0)) *
+                      (desserts.reduce((sum, item) => sum + Number(item.qty), 0) > 0
+                        ? (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) /
+                          desserts.reduce((sum, item) => sum + Number(item.qty), 0)) *
                         100
                         : 0
                       ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
