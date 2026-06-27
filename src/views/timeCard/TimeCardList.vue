@@ -122,6 +122,7 @@
                 dense
                 :items="statusOptions"
                 clearable
+                @change="loadData()"
               ></v-autocomplete>
             </v-toolbar>
           </v-row>
@@ -143,7 +144,7 @@
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-spacer />
+               <v-spacer />
             <v-btn
               color="#254E58"
               dark
@@ -153,14 +154,17 @@
             >
               Add Timecard
             </v-btn>
-          </v-toolbar>
-        </template>
-        <template v-slot:item.machine_id="{ item }">
-            {{ (machines.find(m => m.id === item.mch_id) || {}).machine_id }}
-        </template>
 
-         <template v-slot:item.machine_name="{ item }">
-            {{ (machines.find(m => m.id === item.mch_id) || {}).name }}
+              <v-btn
+              color="#254E58"
+              dark
+              class="mb-2 mr-2"
+             @click="onInsertTimecardEcons()"
+              :disabled="!authorize_add"
+            >
+              Add Timecard Econs
+            </v-btn>
+          </v-toolbar>
         </template>
         <template v-slot:item.status="{ item }">
           <v-chip :color="getStatusColor(item)">
@@ -217,8 +221,31 @@
             Confirm
           </v-btn>
         </v-card-actions>
+        
       </v-card>
     </v-dialog>
+
+
+        <v-dialog v-model="dialogconfirminserttimecardecons" max-width="500px">
+        <v-card>
+          <v-card-title class="text-h6"
+            >Are you sure you want to add timecard econs</v-card-title
+          >
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="dialogconfirminserttimecardecons = false"
+              >Cancel</v-btn
+            >
+            <v-btn color="blue darken-1" text @click="ConfirmAddTimecardEcons()"
+              >OK</v-btn
+            >
+            <v-spacer></v-spacer>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
   </v-container>
 </template>
 
@@ -231,6 +258,7 @@ import isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
 export default {
   data: (vm) => ({
+    dialogconfirminserttimecardecons:false,
     menu: false,
     dateFormatted1: "",
     docNoList: [],
@@ -254,8 +282,6 @@ export default {
     headers: [
       { text: "Doc Group", value: "documentGroup" },
       { text: "Doc No", value: "documentNo" },
-      { text: "Machine ID", value: "machine_id" },
-      { text: "Machine Name", value: "machine_name" },
       { text: "Doc Date", value: "documentDate" },
       { text: "Create Date", value: "createdAt" },
       { text: "Status", value: "status" },
@@ -333,6 +359,9 @@ export default {
       return result;
     },
   },
+    components: {
+    SuccessDialog,
+  },
   watch: {
     dates(val) {
       const [dates1, dates2] = val;
@@ -347,6 +376,40 @@ export default {
     },
   },
   methods: {
+    async ConfirmAddTimecardEcons() {
+      this.$showLoader();
+      const result = await api.InsertdataTimecardFromEcons();
+      console.log(result)
+      if (result.status == 200 || result.status == 201) {
+        this.$store.state.global_dialog = true;
+        this.setupAlertDialog(
+          true,
+          "Success!!!",
+          `Add data Success!!! <br/>
+          Data All ${result.data.total} Record <br/>
+          Data Success ${result.data.success} Record  <br/>
+          Data Fail ${result.data.fail} Record`,
+          "text-h5 green--text text-center"
+        );
+        this.$hideLoader();
+        this.dialogconfirminserttimecardecons = false;
+        return;
+      } else {
+        this.$store.state.global_dialog = true;
+        this.setupAlertDialog(
+          true,
+          "Failed!!!",
+          "Add data Failed",
+          "text-h5 red--text text-center"
+        );
+        this.$hideLoader();
+        this.dialogconfirminserttimecardecons = false;
+        return;
+      }
+    },
+     async onInsertTimecardEcons() {
+      this.dialogconfirminserttimecardecons = true;
+    },
     onChange(event) {
       console.log(event);
     },
@@ -389,27 +452,14 @@ export default {
       this.workOrders = response.data;
     },
     async loadData() {
+      this.$showLoader();
       const response = await api.listTimecardByCompany(
-        localStorage.getItem(server.COMPANYID)
+        localStorage.getItem(server.COMPANYID),{ selectedStatus: this.selectedStatus }
       );
-      const formattedData = response.data.map((data) => ({
-        id: data.id,
-        documentGroup: data.doc_running.module,
-        documentNo: data.doc_running_no,
-        documentDate: dayjs(data.doc_date).format("DD/MM/YYYY"),
-        createdAt: dayjs(data.created_at).format("DD/MM/YYYY"),
-        ...data,
-        status: data.status?.toUpperCase(),
-        isPosted: data.status?.toUpperCase() === "POST",
-      }));
-      this.docNoList = formattedData.map((data) => data.documentNo);
-      this.opnOrdList = response.data.reduce((acc, cur) => {
-        if (acc.includes(cur.opn_ord_id)) {
-          return acc;
-        }
-        return [...acc, cur.opn_ord_id];
-      }, []);
-      this.list = formattedData;
+      this.list = response.data.list;
+      this.docNoList = response.data.docNoList;
+      this.opnOrdList = response.data.opnOrdList;
+      this.$hideLoader();
     },
     async confirmDelete() {
       await api.deleteTimecard(this.selectedTimecardId);

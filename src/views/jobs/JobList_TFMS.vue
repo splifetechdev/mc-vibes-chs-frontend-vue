@@ -172,14 +172,22 @@
                           label="Machine ID"
                         ></v-autocomplete>
 
-                        <v-autocomplete
+                        <!-- <v-autocomplete
                           class="card-input"
                           v-model="item.wo_running_no"
                           hide-details
                           :items="workOrders"
                           dense
                           label="Work Order Running No"
-                        ></v-autocomplete>
+                        ></v-autocomplete> -->
+                        <v-text-field
+                          class="card-input"
+                          v-model="item.wo_running_no"
+                          hide-details
+                          dense
+                          disabled
+                          label="Work Order Running No"
+                        ></v-text-field>
 
                         <v-text-field
                           class="card-input"
@@ -189,7 +197,7 @@
                           label="Operation Description"
                         ></v-text-field>
 
-                        <v-autocomplete
+                        <!-- <v-autocomplete
                           class="card-input"
                           v-model="item.item_id"
                           hide-details
@@ -198,11 +206,19 @@
                           item-value="id"
                           item-text="item_id"
                           label="Item ID"
-                        ></v-autocomplete>
-
+                        ></v-autocomplete> -->
+                         <v-text-field
+                          class="card-input"
+                          v-model="item.item_id_name"
+                          hide-details
+                          dense
+                          disabled
+                          label="Item ID"
+                        ></v-text-field>
+                  <!-- :value="getItemLabel(item.item_id)" -->
                         <v-text-field
                           class="card-input"
-                          :value="getItemLabel(item.item_id)"
+                          v-model="item.item_name"
                           readonly
                           dense
                           label="Item Name"
@@ -352,14 +368,22 @@
                           dense
                           label="Machine ID"
                         ></v-autocomplete>
-                        <v-autocomplete
+                        <!-- <v-autocomplete
                           class="card-input"
                           v-model="item.wo_running_no"
                           hide-details
                           :items="workOrders"
                           dense
                           label="Work Order Running No"
-                        ></v-autocomplete>
+                        ></v-autocomplete> -->
+                         <v-text-field
+                          class="card-input"
+                          v-model="item.wo_running_no"
+                          hide-details
+                          dense
+                          disabled
+                          label="Work Order Running No"
+                        ></v-text-field>
                         <v-row>
                           <v-col cols="6">
                             <v-text-field
@@ -382,7 +406,7 @@
                             ></v-text-field>
                           </v-col>
                         </v-row>
-                        <v-autocomplete
+                        <!-- <v-autocomplete
                           class="card-input"
                           v-model="item.item_id"
                           hide-details
@@ -391,10 +415,19 @@
                           item-value="id"
                           item-text="item_id"
                           label="Item ID"
-                        ></v-autocomplete>
+                        ></v-autocomplete> -->
+                         <v-text-field
+                          class="card-input"
+                          v-model="item.item_id_name"
+                          hide-details
+                          dense
+                          disabled
+                          label="Item ID"
+                        ></v-text-field>
+                        <!-- :value="getItemLabel(item.item_id)" -->
                         <v-text-field
                           class="card-input"
-                          :value="getItemLabel(item.item_id)"
+                            v-model="item.item_name"
                           readonly
                           dense
                           label="Item Name"
@@ -966,7 +999,7 @@ export default {
         );
       }
       if (this.selectedWorkCenterGroup) {
-        console.log(filteredData);
+        // console.log(filteredData);
         filteredData = filteredData.filter(
           (job) => job.wc_group_id.id === this.selectedWorkCenterGroup
         );
@@ -1125,12 +1158,12 @@ export default {
       const response = await api.listMachineByCompany(
         localStorage.getItem(server.COMPANYID)
       );
-      if (response.data.length > 0) {
-        this.machines = response.data.map((data) => ({
-          ...data,
-          label: `${data.machine_id}:${data.name}`,
-        }));
-      }
+       if(response.data.length > 0){
+      this.machines = response.data.map((data) => ({
+        ...data,
+        label: `${data.machine_id}:${data.name}`,
+      }));
+    }
     },
     async loadAuthorize() {
       const res_get = await api.getSettingGroupMenu();
@@ -1140,6 +1173,7 @@ export default {
       return job.received_qty || 0;
     },
     async loadData() {
+      this.$showLoader();
       this.jobs = [];
       const mapping = {
         1: "pending",
@@ -1150,59 +1184,11 @@ export default {
       const formatDate = "YYYY-MM-DD";
       const formatTime = "HH:mm";
       if (["start", "end"].includes(mapping[this.activetab])) {
-        const response = await api.getTimeCardDetails();
+        const response = await api.getTimeCardDetails({ activetab: this.activetab });
         const posted = this.activetab === 3;
         const targetStatus = posted ? "post" : "save";
         const checkIsEnd = targetStatus === "save";
-        this.jobs = response.data
-          .filter(
-            (data) =>
-              // data.tbl_time_card.status === targetStatus &&
-              data.tbl_time_card.time_card_type === "worker" &&
-              (checkIsEnd ? data.end_at === null : data.end_at !== null)
-          )
-          .map((data) => {
-            const found = this.operations.find(
-              (opnOrd) => opnOrd.id === data.id
-            );
-            let startAt,
-              endAt = null;
-            if (data.tbl_time_card?.doc_date) {
-              const startDate = dayjs(data.time_card_date).format("YYYY-MM-DD");
-              startAt = dayjs(`${startDate} ${data.time_start}:00`);
-              endAt = dayjs(`${startDate} ${data.time_end}:00`);
-              if (endAt.isBefore(startAt)) {
-                endAt = endAt.add(1, "day");
-              }
-
-              startAt = startAt.format(formatDate);
-              endAt = endAt.format(formatDate);
-            }
-
-            return {
-              id: data.id,
-              opn_ord_id: data.opn_ord_id || "",
-              mch_id: data?.mch_id || data.machine_id,
-              wo_running_no: data?.wo_running_no,
-              opn_desc: `${data?.opn_desc}`,
-              batch: data?.tbl_opn_ord?.batch_count,
-              item_id: data.item_id,
-              start_at: startAt,
-              start_time: data?.time_start,
-              end_at: endAt,
-              end_time: data?.time_end,
-              wc_id: data?.tbl_mch?.work_center_id || data?.wc_id,
-              wc_group_id:
-                data?.tbl_mch?.tbl_work_center?.tbl_work_center_group,
-              worker_id_list: data?.tbl_time_card_detail_workers.map(
-                (worker) => worker.worker_id
-              ),
-              worker_id: data?.worker_id,
-              defects: data?.tbl_time_card_defects,
-              qty: data?.qty,
-              // tbl_job_workers: tbl_job?.tbl_job_workers,
-            };
-          });
+        this.jobs = response.data;
         this.displayJobs = this.jobs.slice(0, this.pageSize);
         const totalPage = Math.ceil(this.jobs.length / this.pageSize);
         this.paginationLength = totalPage;
@@ -1210,7 +1196,7 @@ export default {
       } else {
         const response = await api.listJobByStatus(mapping[this.activetab]);
         this.jobs = response.data.map((data) => {
-          const { tbl_jobs } = data;
+          const { tbl_jobs,item_master } = data;
           const tbl_job = tbl_jobs[0];
           const found = this.operations.find((opnOrd) => opnOrd.id === data.id);
           let startAt,
@@ -1232,6 +1218,8 @@ export default {
             wo_running_no: tbl_job?.wo_running_no || data.doc_running_no,
             opn_desc: tbl_job?.opn_desc || found.opn_desc,
             item_id: tbl_job?.item_id || data.item_master_id,
+            // item_id_name: item_master?.item_id || data.item_master_id,
+            // item_name: item_master?.item_name || data.item_master_id,
             // start_at: tbl_job?.start_at
             //   ? dayjs(tbl_job.start_at).format(formatDate)
             //   : dayjs(data.opn_start_date_time).format(formatDate),
@@ -1260,6 +1248,7 @@ export default {
           };
         });
       }
+      this.$hideLoader();
     },
     async loadWorkOrder() {
       const response = await api.getWorkOrderOption();
@@ -1370,7 +1359,7 @@ export default {
       // return;
 
       const now = new Date();
-      const target = new Date(`${item.end_at}T${item.end_time}:00`);
+      const target = new Date(`${item.end_at.split(" ")}T${item.end_time}:00`);
 
       if (now >= target) {
         if (!item.worker_id_list.length === 0) {
@@ -1473,7 +1462,7 @@ export default {
       if ("Invalid Date" === endTime) {
         endDateTime = null;
       }
-      
+
       const updateDataTimecardLog = {
         id: this.selectedItem.id,
         opn_ord_id: this.selectedItem.opn_ord_id || "",
@@ -1481,7 +1470,7 @@ export default {
         wo_running_no: this.selectedItem.wo_running_no,
         opn_desc: this.selectedItem.opn_desc,
         item_id: this.selectedItem.item_id,
-        time_card_date: this.selectedItem.start_at,
+        time_card_date: `${this.selectedItem.start_at} 00:00:00`,
         time_start: this.selectedItem.start_time,
         time_end: this.selectedItem.end_time,
         worker_id: this.selectedItem.worker_id,
@@ -1570,14 +1559,14 @@ export default {
       this.$router.back();
     }
 
-    // this.$showLoader();
+      // this.$showLoader();
     await this.loadAuthorize();
     await this.loadOpn();
-    await this.loadWorkOrder();
+    // await this.loadWorkOrder();
     await this.loadWorkCenterGroup();
     await this.loadWorkCenter();
     await this.loadMachine();
-    await this.loadItem();
+    // await this.loadItem();
     await this.loadData();
     await Promise.all([
       this.loadWorker(),

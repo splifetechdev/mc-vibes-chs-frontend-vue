@@ -1,8 +1,8 @@
 import httpClient from "@/services/httpClient";
 import { server } from "@/services/constants";
 
-export const listTimecardByCompany = (company_id) => {
-  return httpClient.get(server.TIMECARD + `/company/${company_id}`);
+export const listTimecardByCompany = (company_id, params) => {
+  return httpClient.get(server.TIMECARD + `/company/${company_id}`, { params });
 };
 
 export const listOwnTimecard = () => {
@@ -21,8 +21,8 @@ export const getWorkOrderOption = () => {
   return httpClient.get(`${server.TIMECARD}/work_order/option`);
 };
 
-export const getTimeCardDetails = () => {
-  return httpClient.get(`${server.TIMECARD}/time-card-detail`);
+export const getTimeCardDetails = (params) => {
+  return httpClient.get(`${server.TIMECARD}/time-card-detail`, { params });
 };
 
 export const getOpnOrdOption = (company_id) => {
@@ -70,7 +70,7 @@ export const getOpnOrd = (opn_ord_id) =>
 
 export const deleteTimecardLog = (time_card_id, time_card_log_id) =>
   httpClient.delete(
-    `${server.TIMECARD}/${time_card_id}/log/${time_card_log_id}`
+    `${server.TIMECARD}/${time_card_id}/log/${time_card_log_id}`,
   );
 
 export const deleteTimecard = (time_card_id) =>
@@ -101,26 +101,26 @@ export const upsertTimecardLog = (data) => {
 
 export const getTimecardDetailReceiveQty = (time_card_id) => {
   return httpClient.get(
-    `${server.TIMECARD}/time-card-detail/${time_card_id}/receive-qty`
+    `${server.TIMECARD}/time-card-detail/${time_card_id}/receive-qty`,
   );
 };
 
 export const endTimecardDetail = (data) => {
   return httpClient.post(
     `${server.TIMECARD}/time-card-detail/${data.id}/end`,
-    data
+    data,
   );
 };
 
 export const getMachineOpnRunning = (machine_id) => {
   return httpClient.get(
-    `${server.TIMECARD}/time-card-detail/machine/${machine_id}/running-opn`
+    `${server.TIMECARD}/time-card-detail/machine/${machine_id}/running-opn`,
   );
 };
 
 export const getTimecardReport = (shift_id, start, end, isLeader) => {
   return httpClient.get(
-    `${server.TIMECARD}/shift/${shift_id}/report?start_date=${start}&end_date=${end}&is_leader=${isLeader}`
+    `${server.TIMECARD}/shift/${shift_id}/report?start_date=${start}&end_date=${end}&is_leader=${isLeader}`,
   );
 };
 // export const updateMachine = (id, data) => {
@@ -149,19 +149,25 @@ export const listDeleteJobByCompany = (data) => {
 
 export const getListDocumentsNycompany = (company_id) => {
   return httpClient.get(
-    `${server.TIMECARD}/get/list_doc_running_no_option/${company_id}`
+    `${server.TIMECARD}/get/list_doc_running_no_option/${company_id}`,
   );
 };
 
 export const getTimecardWorkOrderOption = (company_id) => {
   return httpClient.get(
-    `${server.TIMECARD}/time_card/work_order/option/${company_id}`
+    `${server.TIMECARD}/time_card/work_order/option/${company_id}`,
   );
 };
 
-
 export const checkOpnInUsedInTimecardDetailByOpnId = (opn_id) => {
   return httpClient.get(
-    `${server.TIMECARD}/time_card_detail/check_opn_id_ues/${opn_id}`
+    `${server.TIMECARD}/time_card_detail/check_opn_id_ues/${opn_id}`,
+  );
+};
+
+export const InsertdataTimecardFromEcons = (data) => {
+  return httpClient.post(
+    server.TIMECARD + `/InsertdataTimecardFromEcons`,
+    data,
   );
 };
